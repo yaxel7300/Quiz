@@ -296,7 +296,6 @@
             border-radius: var(--border-radius);
             background-color: var(--card-bg);
             box-shadow: var(--shadow);
-            text-align: center;
             display: none;
         }
 
@@ -324,6 +323,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-align: center;
         }
 
         .correct {
@@ -334,6 +334,43 @@
         .incorrect {
             color: #e74c3c;
             font-weight: 600;
+        }
+
+        .results-details {
+            margin-top: 25px;
+        }
+
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .result-question {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .user-answer, .correct-answer {
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 5px 0;
+        }
+
+        .user-answer.correct {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ecc71;
+        }
+
+        .user-answer.incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid #e74c3c;
+        }
+
+        .correct-answer {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ecc71;
         }
 
         .confetti {
@@ -372,6 +409,28 @@
             50% {
                 transform: translateY(-20px) rotate(10deg);
             }
+        }
+
+        .restart-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
         }
 
         @media (max-width: 768px) {
@@ -450,7 +509,8 @@
             
             <div id="results">
                 <div class="score-display" id="score-display"></div>
-                <p>Merci d'avoir participé ! Les résultats ont été envoyés.</p>
+                <div class="results-details" id="results-details"></div>
+                <button class="restart-btn" id="restart-btn">Recommencer le Quiz</button>
             </div>
         </div>
     </div>
@@ -803,7 +863,6 @@ const quizQuestions = [
         ]
     }
 ];
-
         // --- FIN DES DONNÉES DU QUIZ ---
 
         // Logique du quiz
@@ -811,6 +870,8 @@ const quizQuestions = [
         const submitButton = document.getElementById('submit-quiz');
         const resultsDiv = document.getElementById('results');
         const scoreDisplay = document.getElementById('score-display');
+        const resultsDetailsDiv = document.getElementById('results-details');
+        const restartButton = document.getElementById('restart-btn');
         const participantNameInput = document.getElementById('participant-name');
         const participantEmailInput = document.getElementById('participant-email');
         const progressBar = document.getElementById('progress-bar');
@@ -906,25 +967,49 @@ const quizQuestions = [
             let score = 0;
             let resultsDetails = '';
 
+            // Construire l'affichage détaillé des résultats
+            let resultsHTML = '<div class="results-details">';
+            
             quizQuestions.forEach((currentQuestion, questionNumber) => {
                 const answerContainer = answerContainers[questionNumber];
                 const selector = `input[name=question${questionNumber}]:checked`;
-                const userAnswerText = (answerContainer.querySelector(selector) || {}).value;
-                const correctAnswerText = currentQuestion.answerOptions.find(option => option.isCorrect).text;
+                const userAnswerElement = answerContainer.querySelector(selector);
+                const userAnswerText = userAnswerElement ? userAnswerElement.value : "Aucune réponse";
+                const correctAnswerObj = currentQuestion.answerOptions.find(option => option.isCorrect);
+                const correctAnswerText = correctAnswerObj.text;
 
                 const isCorrect = (userAnswerText === correctAnswerText);
                 if (isCorrect) {
                     score++;
-                    resultsDetails += `Question ${questionNumber + 1}: Correcte.\n`;
-                } else {
-                    resultsDetails += `Question ${questionNumber + 1}: Incorrecte. Votre réponse: "${userAnswerText}". Bonne réponse: "${correctAnswerText}".\n`;
                 }
+                
+                // Ajouter aux détails pour l'email
+                resultsDetails += `Question ${questionNumber + 1}: ${isCorrect ? 'Correcte' : 'Incorrecte'}. Votre réponse: "${userAnswerText}". Bonne réponse: "${correctAnswerText}".\n`;
+                
+                // Ajouter aux détails pour l'affichage
+                resultsHTML += `
+                    <div class="result-item">
+                        <div class="result-question">${questionNumber + 1}. ${currentQuestion.question}</div>
+                        <div class="user-answer ${isCorrect ? 'correct' : 'incorrect'}">
+                            <strong>Votre réponse:</strong> ${userAnswerText}
+                            ${isCorrect ? '<span style="margin-left: 10px;"><i class="fas fa-check"></i></span>' : '<span style="margin-left: 10px;"><i class="fas fa-times"></i></span>'}
+                        </div>
+                        ${!isCorrect ? `
+                        <div class="correct-answer">
+                            <strong>Bonne réponse:</strong> ${correctAnswerText}
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
             });
+            
+            resultsHTML += '</div>';
+            resultsDetailsDiv.innerHTML = resultsHTML;
 
-            // Afficher les résultats sur la page
+            // Afficher le score
             const totalQuestions = quizQuestions.length;
             resultsDiv.classList.add('visible');
-            scoreDisplay.innerHTML = `Votre score: <span class="correct">${score}</span> / <span class="incorrect">${totalQuestions}</span>`;
+            scoreDisplay.innerHTML = `Votre score: <span class="${score >= totalQuestions/2 ? 'correct' : 'incorrect'}">${score}</span> / ${totalQuestions}`;
             
             // Animation de confetti si le score est bon
             if (score >= totalQuestions * 0.7) {
@@ -945,6 +1030,24 @@ const quizQuestions = [
             resultsDiv.scrollIntoView({ behavior: 'smooth' });
         }
 
+        function restartQuiz() {
+            // Réinitialiser le formulaire
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+            });
+            participantNameInput.value = '';
+            participantEmailInput.value = '';
+            
+            // Cacher les résultats
+            resultsDiv.classList.remove('visible');
+            
+            // Réinitialiser la barre de progression
+            updateProgressBar();
+            
+            // Remonter en haut de la page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // Lancer le quiz
         buildQuiz();
         addFloatingIcons();
@@ -958,8 +1061,9 @@ const quizQuestions = [
 
         // Gérer la soumission du quiz
         submitButton.addEventListener('click', showResults);
+        
+        // Gérer le redémarrage du quiz
+        restartButton.addEventListener('click', restartQuiz);
     </script>
 </body>
-
 </html>
-
