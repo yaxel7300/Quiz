@@ -1,1069 +1,468 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Technologique Août 2025</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --success: #4cc9f0;
-            --danger: #f72585;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --background: #ffffff;
-            --card-bg: #ffffff;
-            --text-primary: #333333;
-            --text-secondary: #6c757d;
-            --transition: all 0.3s ease;
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.15);
-            --border-radius: 12px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Technologique Août 2025</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --success: #4cc9f0;
+      --danger: #f72585;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --background: #ffffff;
+      --card-bg: #ffffff;
+      --text-primary: #333333;
+      --text-secondary: #6c757d;
+      --transition: all 0.3s ease;
+      --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.15);
+      --border-radius: 16px;
+    }
 
-        .dark-mode {
-            --background: #121212;
-            --card-bg: #1e1e1e;
-            --text-primary: #f5f5f5;
-            --text-secondary: #b0b0b0;
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
+    .dark-mode {
+      --background: #121212;
+      --card-bg: #1e1e1e;
+      --text-primary: #f5f5f5;
+      --text-secondary: #b0b0b0;
+      --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: var(--transition);
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: var(--transition);
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(247, 37, 133, 0.05) 0%, transparent 20%);
-            transition: background-color 0.5s ease;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      background-image: radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.05) 0%, transparent 20%),
+                        radial-gradient(circle at 90% 80%, rgba(247, 37, 133, 0.05) 0%, transparent 20%);
+    }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 30px;
-        }
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 30px;
+      padding: 15px 20px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      color: white;
+    }
 
-        .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--text-primary);
-            padding: 10px;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--card-bg);
-            box-shadow: var(--shadow);
-        }
+    .header h1 {
+      font-size: 1.8rem;
+    }
 
-        .theme-toggle:hover {
-            transform: rotate(30deg);
-            box-shadow: var(--shadow-hover);
-        }
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: white;
+      padding: 10px;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .quiz-container {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 800px;
-            overflow: hidden;
-            position: relative;
-        }
+    .theme-toggle:hover {
+      transform: rotate(30deg);
+    }
 
-        .quiz-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 25px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+    /* Containers */
+    .quiz-container,
+    .user-info-container,
+    #results {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 25px;
+      padding: 25px;
+    }
 
-        .quiz-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            transform: rotate(30deg);
-            animation: shine 8s infinite linear;
-        }
+    .quiz-header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 25px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+      overflow: hidden;
+    }
 
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%) rotate(30deg);
-            }
-            100% {
-                transform: translateX(100%) rotate(30deg);
-            }
-        }
+    .quiz-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      transform: rotate(30deg);
+      animation: shine 8s infinite linear;
+    }
 
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-        }
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
+    }
 
-        .progress-container {
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            margin: 20px 0;
-            overflow: hidden;
-            height: 10px;
-        }
+    .quiz-header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
 
-        .progress-bar {
-            height: 100%;
-            background-color: var(--success);
-            width: 0%;
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
+    .progress-container {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin-top: 20px;
+      overflow: hidden;
+      height: 12px;
+    }
 
-        .quiz-body {
-            padding: 25px;
-        }
+    .progress-bar {
+      height: 100%;
+      background-color: var(--success);
+      width: 0%;
+      border-radius: 10px;
+    }
 
-        .question-box {
-            margin-bottom: 25px;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            background-color: var(--card-bg);
-            box-shadow: var(--shadow);
-            transform: translateY(20px);
-            opacity: 0;
-            animation: fadeInUp 0.5s forwards;
-        }
+    /* Questions */
+    .question-box {
+      margin-bottom: 25px;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeInUp 0.6s forwards;
+    }
 
-        @keyframes fadeInUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+    @keyframes fadeInUp {
+      to { transform: translateY(0); opacity: 1; }
+    }
 
-        .question-text {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
+    .question-text {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
 
-        .answers {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
 
-        .answer-option {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-radius: 10px;
-            background-color: rgba(67, 97, 238, 0.05);
-            cursor: pointer;
-            transition: var(--transition);
-            border: 2px solid transparent;
-        }
+    .answer-option {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: rgba(67, 97, 238, 0.08);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
 
-        .answer-option:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-            background-color: rgba(67, 97, 238, 0.1);
-            border-color: var(--primary);
-        }
+    .answer-option:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary);
+      background-color: rgba(67, 97, 238, 0.15);
+    }
 
-        .answer-option input {
-            margin-right: 15px;
-            transform: scale(1.2);
-            accent-color: var(--primary);
-        }
+    .answer-option input {
+      margin-right: 15px;
+      transform: scale(1.2);
+      accent-color: var(--primary);
+    }
 
-        .user-info-container {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-top: 20px;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: fadeInUp 0.5s 0.3s forwards;
-        }
+    /* Formulaire */
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
+    .form-group input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid rgba(67, 97, 238, 0.2);
+      border-radius: 10px;
+      font-size: 1rem;
+      background-color: var(--card-bg);
+      color: var(--text-primary);
+    }
 
-        .form-group input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid rgba(67, 97, 238, 0.2);
-            border-radius: 10px;
-            font-size: 1rem;
-            background-color: var(--card-bg);
-            color: var(--text-primary);
-            transition: var(--transition);
-        }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-        }
+    /* Boutons */
+    button {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
 
-        #submit-quiz {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
 
-        #submit-quiz::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
+    /* Résultats */
+    #results {
+      display: none;
+    }
 
-        #submit-quiz:hover::before {
-            left: 100%;
-        }
+    #results.visible {
+      display: block;
+      animation: fadeIn 0.6s forwards;
+    }
 
-        #submit-quiz:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        #submit-quiz:active {
-            transform: translateY(0);
-        }
+    .score-display {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-align: center;
+    }
 
-        #results {
-            margin-top: 30px;
-            padding: 25px;
-            border-radius: var(--border-radius);
-            background-color: var(--card-bg);
-            box-shadow: var(--shadow);
-            display: none;
-        }
+    .correct { color: #2ecc71; }
+    .incorrect { color: #e74c3c; }
 
-        #results.visible {
-            display: block;
-            animation: fadeIn 0.5s forwards;
-        }
+    .result-item {
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      background-color: rgba(67, 97, 238, 0.08);
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .result-question {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
 
-        .score-display {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-align: center;
-        }
+    .user-answer, .correct-answer {
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin: 5px 0;
+    }
 
-        .correct {
-            color: #2ecc71;
-            font-weight: 600;
-        }
+    .user-answer.correct {
+      background-color: rgba(46, 204, 113, 0.1);
+      border-left: 4px solid #2ecc71;
+    }
 
-        .incorrect {
-            color: #e74c3c;
-            font-weight: 600;
-        }
+    .user-answer.incorrect {
+      background-color: rgba(231, 76, 60, 0.1);
+      border-left: 4px solid #e74c3c;
+    }
 
-        .results-details {
-            margin-top: 25px;
-        }
+    .correct-answer {
+      background-color: rgba(46, 204, 113, 0.1);
+      border-left: 4px solid #2ecc71;
+    }
 
-        .result-item {
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: rgba(67, 97, 238, 0.05);
-        }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .quiz-header h1 { font-size: 1.6rem; }
+      .question-text { font-size: 1.1rem; }
+    }
 
-        .result-question {
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .user-answer, .correct-answer {
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin: 5px 0;
-        }
-
-        .user-answer.correct {
-            background-color: rgba(46, 204, 113, 0.1);
-            border-left: 4px solid #2ecc71;
-        }
-
-        .user-answer.incorrect {
-            background-color: rgba(231, 76, 60, 0.1);
-            border-left: 4px solid #e74c3c;
-        }
-
-        .correct-answer {
-            background-color: rgba(46, 204, 113, 0.1);
-            border-left: 4px solid #2ecc71;
-        }
-
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background-color: var(--primary);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        .floating-icon {
-            position: absolute;
-            font-size: 1.5rem;
-            opacity: 0.1;
-            color: var(--primary);
-            animation: float 6s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(10deg);
-            }
-        }
-
-        .restart-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .restart-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        @media (max-width: 768px) {
-            .quiz-header {
-                padding: 20px 15px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .quiz-body {
-                padding: 15px;
-            }
-            
-            .question-text {
-                font-size: 1.1rem;
-            }
-            
-            .answer-option {
-                padding: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .question-text {
-                font-size: 1rem;
-            }
-            
-            .answer-option {
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-            
-            #submit-quiz {
-                padding: 15px;
-                font-size: 1rem;
-            }
-        }
-    </style>
+    @media (max-width: 480px) {
+      .header h1 { font-size: 1.3rem; }
+      .quiz-header h1 { font-size: 1.4rem; }
+      .question-text { font-size: 1rem; }
+      button { font-size: 1rem; padding: 14px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Quiz Technologique Août 2025</h1>
-        <button class="theme-toggle" id="theme-toggle">
-            <i class="fas fa-moon"></i>
-        </button>
+  <div class="header">
+    <h1>Quiz Technologique Août 2025</h1>
+    <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+  </div>
+
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>Testez vos connaissances technologiques</h1>
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
     </div>
+    <div class="quiz-body" id="quiz-content"></div>
+  </div>
 
-    <div class="quiz-container">
-        <div class="quiz-header">
-            <h1>Testez vos connaissances technologiques</h1>
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-        </div>
-        
-        <div class="quiz-body">
-            <div id="quiz-content"></div>
-            
-            <div class="user-info-container">
-                <div class="form-group">
-                    <label for="participant-name">Nom :</label>
-                    <input type="text" id="participant-name" required placeholder="Votre nom">
-                </div>
-                <div class="form-group">
-                    <label for="participant-email">Email (optionnel) :</label>
-                    <input type="email" id="participant-email" placeholder="Votre email">
-                </div>
-                <button id="submit-quiz">Soumettre le Quiz</button>
-            </div>
-            
-            <div id="results">
-                <div class="score-display" id="score-display"></div>
-                <div class="results-details" id="results-details"></div>
-                <button class="restart-btn" id="restart-btn">Recommencer le Quiz</button>
-            </div>
-        </div>
+  <div class="user-info-container">
+    <div class="form-group">
+      <label for="participant-name">Nom :</label>
+      <input type="text" id="participant-name" required placeholder="Votre nom">
     </div>
+    <div class="form-group">
+      <label for="participant-email">Email (optionnel) :</label>
+      <input type="email" id="participant-email" placeholder="Votre email">
+    </div>
+    <button id="submit-quiz">Soumettre le Quiz</button>
+  </div>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        // --- DÉBUT DE LA LOGIQUE D'ENVOI D'EMAIL ---
-        // IMPORTANT : Remplacez ces valeurs avec vos identifiants EmailJS.
-        const serviceID = 'service_lgg2999';
-        const templateID = 'template_h8pp67g';
-        const publicKey = 'WwF-Q_4Exca_6s4T3';
+  <div id="results">
+    <div class="score-display" id="score-display"></div>
+    <div class="results-details" id="results-details"></div>
+    <button id="restart-btn">Recommencer le Quiz</button>
+  </div>
 
-        // Initialiser EmailJS avec votre clé publique
-        emailjs.init(publicKey);
-
-        // Fonction pour envoyer les résultats par email
-        function sendResultsByEmail(name, email, score, total, resultsDetails) {
-            const templateParams = {
-                from_name: name,
-                from_email: email || 'Non spécifié',
-                score: `${score} / ${total}`,
-                details: resultsDetails,
-                to_email: 'axelmoellet594@gmail.com'
-            };
-
-            emailjs.send(serviceID, templateID, templateParams)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                }, function(error) {
-                    console.log('FAILED...', error);
-                });
-        }
-        // --- FIN DE LA LOGIQUE D'ENVOI D'EMAIL ---
-
-        // --- DÉBUT DES DONNÉES DU QUIZ ---
-const quizQuestions = [
-    {
-        "question": "Quel est le rôle principal d'un pare-feu dans la sécurité d'un réseau ?",
-        "answerOptions": [
-            { "text": "Il protège le réseau en filtrant le trafic de données pour bloquer les accès non autorisés.", "isCorrect": true },
-            { "text": "Il permet de stocker des données en ligne de manière sécurisée.", "isCorrect": false },
-            { "text": "Il sert à augmenter la vitesse de connexion Internet.", "isCorrect": false },
-            { "text": "Il convertit les adresses IP en noms de domaine.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce que l'Internet des objets (IoT) ?",
-        "answerOptions": [
-            { "text": "Une connexion de dispositifs physiques à Internet pour qu'ils puissent échanger des données entre eux et avec des systèmes informatiques.", "isCorrect": true },
-            { "text": "Un réseau social pour les développeurs d'applications.", "isCorrect": false },
-            { "text": "Un protocole de communication pour les satellites.", "isCorrect": false },
-            { "text": "Un type de base de données pour les applications mobiles.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quelle est la principale caractéristique de la mémoire RAM ?",
-        "answerOptions": [
-            { "text": "C'est une mémoire volatile qui stocke les données temporaires de travail d'un ordinateur.", "isCorrect": true },
-            { "text": "C'est une mémoire de stockage à long terme, même si l'ordinateur est éteint.", "isCorrect": false },
-            { "text": "Elle stocke uniquement le système d'exploitation de l'ordinateur.", "isCorrect": false },
-            { "text": "Elle est utilisée pour le traitement graphique intensif.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce que la 'latence' dans les réseaux informatiques ?",
-        "answerOptions": [
-            { "text": "Le délai de transmission des données entre deux points du réseau.", "isCorrect": true },
-            { "text": "La quantité maximale de données qui peut être transmise en un temps donné.", "isCorrect": false },
-            { "text": "Le nombre de connexions simultanées supportées par un serveur.", "isCorrect": false },
-            { "text": "Une méthode de chiffrement des données pour les sécuriser.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le but principal de l'intelligence artificielle (IA) ?",
-        "answerOptions": [
-            { "text": "Développer des systèmes capables d'exécuter des tâches qui nécessitent habituellement l'intelligence humaine, comme la reconnaissance de formes ou la prise de décision.", "isCorrect": true },
-            { "text": "Créer des robots physiques pour effectuer des tâches manuelles.", "isCorrect": false },
-            { "text": "Améliorer les performances des jeux vidéo.", "isCorrect": false },
-            { "text": "Simplifier le développement d'applications mobiles.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce qu'une 'adresse IP' ?",
-        "answerOptions": [
-            { "text": "Un identifiant numérique unique attribué à chaque appareil sur un réseau informatique pour permettre sa communication.", "isCorrect": true },
-            { "text": "Un mot de passe pour accéder à un site web.", "isCorrect": false },
-            { "text": "Le nom d'un site web sur Internet.", "isCorrect": false },
-            { "text": "Un identifiant pour un programme d'ordinateur.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le principal avantage de l'architecture de microservices par rapport à une architecture monolithique ?",
-        "answerOptions": [
-            { "text": "Une plus grande rapidité de développement et une meilleure évolutivité des composants individuels.", "isCorrect": true },
-            { "text": "Une gestion plus simple et centralisée de l'ensemble de l'application.", "isCorrect": false },
-            { "text": "Une meilleure performance pour les applications à faible trafic.", "isCorrect": false },
-            { "text": "Une réduction significative des coûts d'hébergement.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Dans le modèle de communication OSI, quelle couche est responsable du routage des paquets de données d'un réseau à un autre ?",
-        "answerOptions": [
-            { "text": "La couche 2 (liaison de données).", "isCorrect": false },
-            { "text": "La couche 3 (réseau).", "isCorrect": true },
-            { "text": "La couche 4 (transport).", "isCorrect": false },
-            { "text": "La couche 7 (application).", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce qu'un 'ransomware' ?",
-        "answerOptions": [
-            { "text": "Un logiciel qui crypte les fichiers de la victime et demande une rançon pour les déchiffrer.", "isCorrect": true },
-            { "text": "Un programme qui supprime les virus d'un ordinateur.", "isCorrect": false },
-            { "text": "Un outil pour augmenter la vitesse de l'ordinateur.", "isCorrect": false },
-            { "text": "Un type de pare-feu pour protéger les données.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quelle est la principale amélioration apportée par la technologie 5G par rapport à la 4G ?",
-        "answerOptions": [
-            { "text": "Des débits de données plus élevés, une latence plus faible et une capacité accrue à gérer un grand nombre d'appareils connectés.", "isCorrect": true },
-            { "text": "Une plus longue durée de vie de la batterie sur les téléphones mobiles.", "isCorrect": false },
-            { "text": "Une meilleure compatibilité avec les anciens téléphones.", "isCorrect": false },
-            { "text": "Un réseau moins gourmand en énergie.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le rôle du CPU (Central Processing Unit) dans un ordinateur ?",
-        "answerOptions": [
-            { "text": "Exécuter les instructions des programmes et effectuer les calculs nécessaires.", "isCorrect": true },
-            { "text": "Stocker les données de manière permanente.", "isCorrect": false },
-            { "text": "Afficher les images et les vidéos à l'écran.", "isCorrect": false },
-            { "text": "Gérer les connexions réseau.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quelle est la fonction d'une base de données ?",
-        "answerOptions": [
-            { "text": "Un système organisé pour le stockage, la gestion et la récupération de données numériques.", "isCorrect": true },
-            { "text": "Un programme pour créer des sites web.", "isCorrect": false },
-            { "text": "Un type de pare-feu pour la sécurité.", "isCorrect": false },
-            { "text": "Un outil pour écrire du code.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce que le 'cloud computing' ?",
-        "answerOptions": [
-            { "text": "La fourniture de services informatiques (serveurs, stockage, bases de données, logiciels) via Internet.", "isCorrect": true },
-            { "text": "L'utilisation de la mémoire RAM pour le stockage temporaire.", "isCorrect": false },
-            { "text": "Un type de processeur graphique.", "isCorrect": false },
-            { "text": "Le processus de création d'un réseau local.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Dans le modèle OSI, quelle est la fonction principale de la couche de transport ?",
-        "answerOptions": [
-            { "text": "D'assurer la communication de bout en bout et la fiabilité de la transmission des données entre deux hôtes.", "isCorrect": true },
-            { "text": "De convertir des adresses IP en adresses physiques.", "isCorrect": false },
-            { "text": "D'afficher le contenu d'une page web.", "isCorrect": false },
-            { "text": "D'interconnecter des réseaux locaux.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le rôle principal d'une base de données relationnelle ?",
-        "answerOptions": [
-            { "text": "Organiser les données en tableaux (tables) avec des relations prédéfinies entre eux.", "isCorrect": true },
-            { "text": "Stocker des documents non structurés comme des images ou des vidéos.", "isCorrect": false },
-            { "text": "Générer des graphiques et des rapports automatiquement.", "isCorrect": false },
-            { "text": "Permettre la communication entre différents serveurs.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quelle est la principale différence entre un disque dur (HDD) et un disque SSD (Solid State Drive) ?",
-        "answerOptions": [
-            { "text": "Le HDD utilise des plateaux magnétiques en rotation, tandis que le SSD utilise de la mémoire flash sans pièces mobiles.", "isCorrect": true },
-            { "text": "Le SSD est plus lent et consomme plus d'énergie que le HDD.", "isCorrect": false },
-            { "text": "Le HDD a une plus grande durabilité que le SSD.", "isCorrect": false },
-            { "text": "Le SSD est une mémoire volatile, contrairement au HDD.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce que le 'Big Data' ?",
-        "answerOptions": [
-            { "text": "Des ensembles de données extrêmement volumineux et complexes que les logiciels de traitement de données traditionnels ne peuvent pas gérer.", "isCorrect": true },
-            { "text": "Un type de base de données pour les petites entreprises.", "isCorrect": false },
-            { "text": "Un logiciel de sécurité pour protéger les données personnelles.", "isCorrect": false },
-            { "text": "Un programme pour créer des animations 3D.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce qu'une attaque par déni de service (DDoS) ?",
-        "answerOptions": [
-            { "text": "Une attaque qui rend un service en ligne indisponible en le submergeant de requêtes provenant de multiples sources.", "isCorrect": true },
-            { "text": "Une méthode pour voler des données personnelles en ligne.", "isCorrect": false },
-            { "text": "Un logiciel qui se propage d'ordinateur en ordinateur.", "isCorrect": false },
-            { "text": "Un moyen de chiffrer les données pour les rendre illisibles.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le rôle d'une 'variable' dans la programmation ?",
-        "answerOptions": [
-            { "text": "Stocker une valeur qui peut être modifiée au cours de l'exécution d'un programme.", "isCorrect": true },
-            { "text": "Définir la structure d'un site web.", "isCorrect": false },
-            { "text": "Exécuter une instruction de calcul.", "isCorrect": false },
-            { "text": "Créer une interface utilisateur graphique.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Lequel des langages suivants est principalement utilisé pour la programmation de sites web côté client (frontend) ?",
-        "answerOptions": [
-            { "text": "Python.", "isCorrect": false },
-            { "text": "Java.", "isCorrect": false },
-            { "text": "JavaScript.", "isCorrect": true },
-            { "text": "C++.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce qu'un 'protocole' dans le contexte de la mise en réseau ?",
-        "answerOptions": [
-            { "text": "Un ensemble de règles et de procédures pour la communication de données entre des appareils.", "isCorrect": true },
-            { "text": "Un logiciel antivirus pour le réseau.", "isCorrect": false },
-            { "text": "Un type de câble pour connecter des ordinateurs.", "isCorrect": false },
-            { "text": "Un nom de domaine pour un site web.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est l'objectif d'un 'VPN' (Virtual Private Network) ?",
-        "answerOptions": [
-            { "text": "Créer une connexion sécurisée et privée sur un réseau public, en chiffrant les données.", "isCorrect": true },
-            { "text": "Augmenter la vitesse d'une connexion Internet.", "isCorrect": false },
-            { "text": "Stocker des fichiers en ligne.", "isCorrect": false },
-            { "text": "Protéger l'ordinateur contre les virus.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce que l'apprentissage automatique (Machine Learning) ?",
-        "answerOptions": [
-            { "text": "Une branche de l'IA qui permet à un système d'apprendre à partir de données sans être explicitement programmé.", "isCorrect": true },
-            { "text": "Le processus de création d'un site web interactif.", "isCorrect": false },
-            { "text": "Une méthode pour optimiser le stockage des données.", "isCorrect": false },
-            { "text": "Un type de base de données pour les applications web.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le but principal d'un 'compilateur' en programmation ?",
-        "answerOptions": [
-            { "text": "De convertir le code source écrit par un développeur en code machine (binaire) que le processeur peut exécuter.", "isCorrect": true },
-            { "text": "De détecter et de corriger les erreurs de syntaxe dans le code.", "isCorrect": false },
-            { "text": "De permettre la communication entre plusieurs programmes.", "isCorrect": false },
-            { "text": "De créer une interface utilisateur graphique pour le programme.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce que la 'blockchain' ?",
-        "answerOptions": [
-            { "text": "Une chaîne de blocs de données sécurisée et immuable, gérée par un réseau d'ordinateurs, et non par une autorité centrale.", "isCorrect": true },
-            { "text": "Un type de base de données centralisée utilisée par les banques.", "isCorrect": false },
-            { "text": "Un algorithme de compression de données pour les fichiers volumineux.", "isCorrect": false },
-            { "text": "Un langage de programmation pour les applications financières.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce que le 'protocole TCP/IP' ?",
-        "answerOptions": [
-            { "text": "L'ensemble de protocoles de communication de base sur lequel repose Internet.", "isCorrect": true },
-            { "text": "Un protocole de sécurité pour la navigation privée.", "isCorrect": false },
-            { "text": "Un langage pour le développement de logiciels.", "isCorrect": false },
-            { "text": "Un logiciel pour créer des applications mobiles.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quelle est la différence entre un programme 'malware' et un virus informatique ?",
-        "answerOptions": [
-            { "text": "Un virus est un type de 'malware' qui peut se répliquer en infectant d'autres fichiers sur l'ordinateur hôte.", "isCorrect": true },
-            { "text": "Un 'malware' ne peut pas se propager sur un réseau, contrairement à un virus.", "isCorrect": false },
-            { "text": "Un virus est toujours un programme bénin, alors qu'un 'malware' est malveillant.", "isCorrect": false },
-            { "text": "Les deux termes désignent exactement la même chose.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le rôle d'une 'API' (Application Programming Interface) ?",
-        "answerOptions": [
-            { "text": "Un ensemble de règles et de protocoles qui permet à différentes applications logicielles de communiquer entre elles.", "isCorrect": true },
-            { "text": "Le code source d'un programme informatique.", "isCorrect": false },
-            { "text": "Un type de base de données.", "isCorrect": false },
-            { "text": "Une interface utilisateur graphique pour les applications.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le principal avantage de la fibre optique par rapport au câble Ethernet en cuivre ?",
-        "answerOptions": [
-            { "text": "Des débits de données beaucoup plus élevés sur de longues distances.", "isCorrect": true },
-            { "text": "Une plus grande facilité d'installation et de maintenance.", "isCorrect": false },
-            { "text": "Une immunité totale aux logiciels malveillants.", "isCorrect": false },
-            { "text": "Une consommation d'énergie beaucoup plus faible.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce qu'une 'boucle' dans la programmation ?",
-        "answerOptions": [
-            { "text": "Une structure de contrôle qui répète une séquence d'instructions jusqu'à ce qu'une condition soit remplie.", "isCorrect": true },
-            { "text": "Une erreur de syntaxe qui empêche le programme de s'exécuter.", "isCorrect": false },
-            { "text": "Une variable qui stocke plusieurs valeurs.", "isCorrect": false },
-            { "text": "Une fonction qui exécute une tâche spécifique.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le but d'un 'système d'exploitation' (OS) ?",
-        "answerOptions": [
-            { "text": "Gérer les ressources matérielles et logicielles d'un ordinateur et fournir une interface utilisateur.", "isCorrect": true },
-            { "text": "Créer des sites web et des applications.", "isCorrect": false },
-            { "text": "Protéger l'ordinateur contre les attaques de virus.", "isCorrect": false },
-            { "text": "Stocker des fichiers de manière permanente.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce que le 'débogage' (debugging) ?",
-        "answerOptions": [
-            { "text": "Le processus de détection et de correction des erreurs (bugs) dans le code source d'un programme.", "isCorrect": true },
-            { "text": "La création de tests pour s'assurer qu'un programme fonctionne correctement.", "isCorrect": false },
-            { "text": "La conversion du code source en code machine.", "isCorrect": false },
-            { "text": "Le processus de publication d'un programme sur le web.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quelle est la différence entre 'HTML' et 'CSS' dans le développement web ?",
-        "answerOptions": [
-            { "text": "HTML structure le contenu d'une page web, tandis que CSS la met en forme (couleurs, polices, mise en page).", "isCorrect": true },
-            { "text": "HTML gère l'interactivité d'une page web, et CSS gère la sécurité.", "isCorrect": false },
-            { "text": "HTML est un langage de programmation, tandis que CSS est un protocole de réseau.", "isCorrect": false },
-            { "text": "HTML gère la logique de l'application, et CSS gère la base de données.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Qu'est-ce qu'une attaque de 'phishing' ?",
-        "answerOptions": [
-            { "text": "Une tentative de se faire passer pour une entité de confiance dans une communication électronique pour voler des informations sensibles.", "isCorrect": true },
-            { "text": "Un logiciel qui crypte les fichiers d'un ordinateur et demande une rançon.", "isCorrect": false },
-            { "text": "Une attaque qui rend un service en ligne indisponible en le submergeant de requêtes.", "isCorrect": false },
-            { "text": "Un programme qui se propage automatiquement d'ordinateur en ordinateur.", "isCorrect": false }
-        ]
-    },
-    {
-        "question": "Quel est le principal avantage de l'architecture 'serverless' ?",
-        "answerOptions": [
-            { "text": "Les développeurs n'ont pas à se soucier de la gestion des serveurs, car le fournisseur de cloud gère automatiquement l'infrastructure.", "isCorrect": true },
-            { "text": "Elle permet d'exécuter des applications uniquement sur des appareils locaux, sans connexion Internet.", "isCorrect": false },
-            { "text": "Elle garantit une immunité totale aux cyberattaques.", "isCorrect": false },
-            { "text": "Elle ne nécessite pas l'utilisation d'une base de données.", "isCorrect": false }
-        ]
+  <script>
+    // Mélange
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
     }
-];
-        // --- FIN DES DONNÉES DU QUIZ ---
 
-        // Logique du quiz
-        const quizContentDiv = document.getElementById('quiz-content');
-        const submitButton = document.getElementById('submit-quiz');
-        const resultsDiv = document.getElementById('results');
-        const scoreDisplay = document.getElementById('score-display');
-        const resultsDetailsDiv = document.getElementById('results-details');
-        const restartButton = document.getElementById('restart-btn');
-        const participantNameInput = document.getElementById('participant-name');
-        const participantEmailInput = document.getElementById('participant-email');
-        const progressBar = document.getElementById('progress-bar');
-        const themeToggle = document.getElementById('theme-toggle');
-        const body = document.body;
+const quizQuestions = [ { "question": "Quel est le rôle principal d'un pare-feu dans la sécurité d'un réseau ?", "answerOptions": [ { "text": "Il protège le réseau en filtrant le trafic de données pour bloquer les accès non autorisés.", "isCorrect": true }, { "text": "Il permet de stocker des données en ligne de manière sécurisée.", "isCorrect": false }, { "text": "Il sert à augmenter la vitesse de connexion Internet.", "isCorrect": false }, { "text": "Il convertit les adresses IP en noms de domaine.", "isCorrect": false } ] }, { "question": "Qu'est-ce que l'Internet des objets (IoT) ?", "answerOptions": [ { "text": "Une connexion de dispositifs physiques à Internet pour qu'ils puissent échanger des données entre eux et avec des systèmes informatiques.", "isCorrect": true }, { "text": "Un réseau social pour les développeurs d'applications.", "isCorrect": false }, { "text": "Un protocole de communication pour les satellites.", "isCorrect": false }, { "text": "Un type de base de données pour les applications mobiles.", "isCorrect": false } ] }, { "question": "Quelle est la principale caractéristique de la mémoire RAM ?", "answerOptions": [ { "text": "C'est une mémoire volatile qui stocke les données temporaires de travail d'un ordinateur.", "isCorrect": true }, { "text": "C'est une mémoire de stockage à long terme, même si l'ordinateur est éteint.", "isCorrect": false }, { "text": "Elle stocke uniquement le système d'exploitation de l'ordinateur.", "isCorrect": false }, { "text": "Elle est utilisée pour le traitement graphique intensif.", "isCorrect": false } ] }, { "question": "Qu'est-ce que la 'latence' dans les réseaux informatiques ?", "answerOptions": [ { "text": "Le délai de transmission des données entre deux points du réseau.", "isCorrect": true }, { "text": "La quantité maximale de données qui peut être transmise en un temps donné.", "isCorrect": false }, { "text": "Le nombre de connexions simultanées supportées par un serveur.", "isCorrect": false }, { "text": "Une méthode de chiffrement des données pour les sécuriser.", "isCorrect": false } ] }, { "question": "Quel est le but principal de l'intelligence artificielle (IA) ?", "answerOptions": [ { "text": "Développer des systèmes capables d'exécuter des tâches qui nécessitent habituellement l'intelligence humaine, comme la reconnaissance de formes ou la prise de décision.", "isCorrect": true }, { "text": "Créer des robots physiques pour effectuer des tâches manuelles.", "isCorrect": false }, { "text": "Améliorer les performances des jeux vidéo.", "isCorrect": false }, { "text": "Simplifier le développement d'applications mobiles.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'une 'adresse IP' ?", "answerOptions": [ { "text": "Un identifiant numérique unique attribué à chaque appareil sur un réseau informatique pour permettre sa communication.", "isCorrect": true }, { "text": "Un mot de passe pour accéder à un site web.", "isCorrect": false }, { "text": "Le nom d'un site web sur Internet.", "isCorrect": false }, { "text": "Un identifiant pour un programme d'ordinateur.", "isCorrect": false } ] }, { "question": "Quel est le principal avantage de l'architecture de microservices par rapport à une architecture monolithique ?", "answerOptions": [ { "text": "Une plus grande rapidité de développement et une meilleure évolutivité des composants individuels.", "isCorrect": true }, { "text": "Une gestion plus simple et centralisée de l'ensemble de l'application.", "isCorrect": false }, { "text": "Une meilleure performance pour les applications à faible trafic.", "isCorrect": false }, { "text": "Une réduction significative des coûts d'hébergement.", "isCorrect": false } ] }, { "question": "Dans le modèle de communication OSI, quelle couche est responsable du routage des paquets de données d'un réseau à un autre ?", "answerOptions": [ { "text": "La couche 2 (liaison de données).", "isCorrect": false }, { "text": "La couche 3 (réseau).", "isCorrect": true }, { "text": "La couche 4 (transport).", "isCorrect": false }, { "text": "La couche 7 (application).", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'un 'ransomware' ?", "answerOptions": [ { "text": "Un logiciel qui crypte les fichiers de la victime et demande une rançon pour les déchiffrer.", "isCorrect": true }, { "text": "Un programme qui supprime les virus d'un ordinateur.", "isCorrect": false }, { "text": "Un outil pour augmenter la vitesse de l'ordinateur.", "isCorrect": false }, { "text": "Un type de pare-feu pour protéger les données.", "isCorrect": false } ] }, { "question": "Quelle est la principale amélioration apportée par la technologie 5G par rapport à la 4G ?", "answerOptions": [ { "text": "Des débits de données plus élevés, une latence plus faible et une capacité accrue à gérer un grand nombre d'appareils connectés.", "isCorrect": true }, { "text": "Une plus longue durée de vie de la batterie sur les téléphones mobiles.", "isCorrect": false }, { "text": "Une meilleure compatibilité avec les anciens téléphones.", "isCorrect": false }, { "text": "Un réseau moins gourmand en énergie.", "isCorrect": false } ] }, { "question": "Quel est le rôle du CPU (Central Processing Unit) dans un ordinateur ?", "answerOptions": [ { "text": "Exécuter les instructions des programmes et effectuer les calculs nécessaires.", "isCorrect": true }, { "text": "Stocker les données de manière permanente.", "isCorrect": false }, { "text": "Afficher les images et les vidéos à l'écran.", "isCorrect": false }, { "text": "Gérer les connexions réseau.", "isCorrect": false } ] }, { "question": "Quelle est la fonction d'une base de données ?", "answerOptions": [ { "text": "Un système organisé pour le stockage, la gestion et la récupération de données numériques.", "isCorrect": true }, { "text": "Un programme pour créer des sites web.", "isCorrect": false }, { "text": "Un type de pare-feu pour la sécurité.", "isCorrect": false }, { "text": "Un outil pour écrire du code.", "isCorrect": false } ] }, { "question": "Qu'est-ce que le 'cloud computing' ?", "answerOptions": [ { "text": "La fourniture de services informatiques (serveurs, stockage, bases de données, logiciels) via Internet.", "isCorrect": true }, { "text": "L'utilisation de la mémoire RAM pour le stockage temporaire.", "isCorrect": false }, { "text": "Un type de processeur graphique.", "isCorrect": false }, { "text": "Le processus de création d'un réseau local.", "isCorrect": false } ] }, { "question": "Dans le modèle OSI, quelle est la fonction principale de la couche de transport ?", "answerOptions": [ { "text": "D'assurer la communication de bout en bout et la fiabilité de la transmission des données entre deux hôtes.", "isCorrect": true }, { "text": "De convertir des adresses IP en adresses physiques.", "isCorrect": false }, { "text": "D'afficher le contenu d'une page web.", "isCorrect": false }, { "text": "D'interconnecter des réseaux locaux.", "isCorrect": false } ] }, { "question": "Quel est le rôle principal d'une base de données relationnelle ?", "answerOptions": [ { "text": "Organiser les données en tableaux (tables) avec des relations prédéfinies entre eux.", "isCorrect": true }, { "text": "Stocker des documents non structurés comme des images ou des vidéos.", "isCorrect": false }, { "text": "Générer des graphiques et des rapports automatiquement.", "isCorrect": false }, { "text": "Permettre la communication entre différents serveurs.", "isCorrect": false } ] }, { "question": "Quelle est la principale différence entre un disque dur (HDD) et un disque SSD (Solid State Drive) ?", "answerOptions": [ { "text": "Le HDD utilise des plateaux magnétiques en rotation, tandis que le SSD utilise de la mémoire flash sans pièces mobiles.", "isCorrect": true }, { "text": "Le SSD est plus lent et consomme plus d'énergie que le HDD.", "isCorrect": false }, { "text": "Le HDD a une plus grande durabilité que le SSD.", "isCorrect": false }, { "text": "Le SSD est une mémoire volatile, contrairement au HDD.", "isCorrect": false } ] }, { "question": "Qu'est-ce que le 'Big Data' ?", "answerOptions": [ { "text": "Des ensembles de données extrêmement volumineux et complexes que les logiciels de traitement de données traditionnels ne peuvent pas gérer.", "isCorrect": true }, { "text": "Un type de base de données pour les petites entreprises.", "isCorrect": false }, { "text": "Un logiciel de sécurité pour protéger les données personnelles.", "isCorrect": false }, { "text": "Un programme pour créer des animations 3D.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'une attaque par déni de service (DDoS) ?", "answerOptions": [ { "text": "Une attaque qui rend un service en ligne indisponible en le submergeant de requêtes provenant de multiples sources.", "isCorrect": true }, { "text": "Une méthode pour voler des données personnelles en ligne.", "isCorrect": false }, { "text": "Un logiciel qui se propage d'ordinateur en ordinateur.", "isCorrect": false }, { "text": "Un moyen de chiffrer les données pour les rendre illisibles.", "isCorrect": false } ] }, { "question": "Quel est le rôle d'une 'variable' dans la programmation ?", "answerOptions": [ { "text": "Stocker une valeur qui peut être modifiée au cours de l'exécution d'un programme.", "isCorrect": true }, { "text": "Définir la structure d'un site web.", "isCorrect": false }, { "text": "Exécuter une instruction de calcul.", "isCorrect": false }, { "text": "Créer une interface utilisateur graphique.", "isCorrect": false } ] }, { "question": "Lequel des langages suivants est principalement utilisé pour la programmation de sites web côté client (frontend) ?", "answerOptions": [ { "text": "Python.", "isCorrect": false }, { "text": "Java.", "isCorrect": false }, { "text": "JavaScript.", "isCorrect": true }, { "text": "C++.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'un 'protocole' dans le contexte de la mise en réseau ?", "answerOptions": [ { "text": "Un ensemble de règles et de procédures pour la communication de données entre des appareils.", "isCorrect": true }, { "text": "Un logiciel antivirus pour le réseau.", "isCorrect": false }, { "text": "Un type de câble pour connecter des ordinateurs.", "isCorrect": false }, { "text": "Un nom de domaine pour un site web.", "isCorrect": false } ] }, { "question": "Quel est l'objectif d'un 'VPN' (Virtual Private Network) ?", "answerOptions": [ { "text": "Créer une connexion sécurisée et privée sur un réseau public, en chiffrant les données.", "isCorrect": true }, { "text": "Augmenter la vitesse d'une connexion Internet.", "isCorrect": false }, { "text": "Stocker des fichiers en ligne.", "isCorrect": false }, { "text": "Protéger l'ordinateur contre les virus.", "isCorrect": false } ] }, { "question": "Qu'est-ce que l'apprentissage automatique (Machine Learning) ?", "answerOptions": [ { "text": "Une branche de l'IA qui permet à un système d'apprendre à partir de données sans être explicitement programmé.", "isCorrect": true }, { "text": "Le processus de création d'un site web interactif.", "isCorrect": false }, { "text": "Une méthode pour optimiser le stockage des données.", "isCorrect": false }, { "text": "Un type de base de données pour les applications web.", "isCorrect": false } ] }, { "question": "Quel est le but principal d'un 'compilateur' en programmation ?", "answerOptions": [ { "text": "De convertir le code source écrit par un développeur en code machine (binaire) que le processeur peut exécuter.", "isCorrect": true }, { "text": "De détecter et de corriger les erreurs de syntaxe dans le code.", "isCorrect": false }, { "text": "De permettre la communication entre plusieurs programmes.", "isCorrect": false }, { "text": "De créer une interface utilisateur graphique pour le programme.", "isCorrect": false } ] }, { "question": "Qu'est-ce que la 'blockchain' ?", "answerOptions": [ { "text": "Une chaîne de blocs de données sécurisée et immuable, gérée par un réseau d'ordinateurs, et non par une autorité centrale.", "isCorrect": true }, { "text": "Un type de base de données centralisée utilisée par les banques.", "isCorrect": false }, { "text": "Un algorithme de compression de données pour les fichiers volumineux.", "isCorrect": false }, { "text": "Un langage de programmation pour les applications financières.", "isCorrect": false } ] }, { "question": "Qu'est-ce que le 'protocole TCP/IP' ?", "answerOptions": [ { "text": "L'ensemble de protocoles de communication de base sur lequel repose Internet.", "isCorrect": true }, { "text": "Un protocole de sécurité pour la navigation privée.", "isCorrect": false }, { "text": "Un langage pour le développement de logiciels.", "isCorrect": false }, { "text": "Un logiciel pour créer des applications mobiles.", "isCorrect": false } ] }, { "question": "Quelle est la différence entre un programme 'malware' et un virus informatique ?", "answerOptions": [ { "text": "Un virus est un type de 'malware' qui peut se répliquer en infectant d'autres fichiers sur l'ordinateur hôte.", "isCorrect": true }, { "text": "Un 'malware' ne peut pas se propager sur un réseau, contrairement à un virus.", "isCorrect": false }, { "text": "Un virus est toujours un programme bénin, alors qu'un 'malware' est malveillant.", "isCorrect": false }, { "text": "Les deux termes désignent exactement la même chose.", "isCorrect": false } ] }, { "question": "Quel est le rôle d'une 'API' (Application Programming Interface) ?", "answerOptions": [ { "text": "Un ensemble de règles et de protocoles qui permet à différentes applications logicielles de communiquer entre elles.", "isCorrect": true }, { "text": "Le code source d'un programme informatique.", "isCorrect": false }, { "text": "Un type de base de données.", "isCorrect": false }, { "text": "Une interface utilisateur graphique pour les applications.", "isCorrect": false } ] }, { "question": "Quel est le principal avantage de la fibre optique par rapport au câble Ethernet en cuivre ?", "answerOptions": [ { "text": "Des débits de données beaucoup plus élevés sur de longues distances.", "isCorrect": true }, { "text": "Une plus grande facilité d'installation et de maintenance.", "isCorrect": false }, { "text": "Une immunité totale aux logiciels malveillants.", "isCorrect": false }, { "text": "Une consommation d'énergie beaucoup plus faible.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'une 'boucle' dans la programmation ?", "answerOptions": [ { "text": "Une structure de contrôle qui répète une séquence d'instructions jusqu'à ce qu'une condition soit remplie.", "isCorrect": true }, { "text": "Une erreur de syntaxe qui empêche le programme de s'exécuter.", "isCorrect": false }, { "text": "Une variable qui stocke plusieurs valeurs.", "isCorrect": false }, { "text": "Une fonction qui exécute une tâche spécifique.", "isCorrect": false } ] }, { "question": "Quel est le but d'un 'système d'exploitation' (OS) ?", "answerOptions": [ { "text": "Gérer les ressources matérielles et logicielles d'un ordinateur et fournir une interface utilisateur.", "isCorrect": true }, { "text": "Créer des sites web et des applications.", "isCorrect": false }, { "text": "Protéger l'ordinateur contre les attaques de virus.", "isCorrect": false }, { "text": "Stocker des fichiers de manière permanente.", "isCorrect": false } ] }, { "question": "Qu'est-ce que le 'débogage' (debugging) ?", "answerOptions": [ { "text": "Le processus de détection et de correction des erreurs (bugs) dans le code source d'un programme.", "isCorrect": true }, { "text": "La création de tests pour s'assurer qu'un programme fonctionne correctement.", "isCorrect": false }, { "text": "La conversion du code source en code machine.", "isCorrect": false }, { "text": "Le processus de publication d'un programme sur le web.", "isCorrect": false } ] }, { "question": "Quelle est la différence entre 'HTML' et 'CSS' dans le développement web ?", "answerOptions": [ { "text": "HTML structure le contenu d'une page web, tandis que CSS la met en forme (couleurs, polices, mise en page).", "isCorrect": true }, { "text": "HTML gère l'interactivité d'une page web, et CSS gère la sécurité.", "isCorrect": false }, { "text": "HTML est un langage de programmation, tandis que CSS est un protocole de réseau.", "isCorrect": false }, { "text": "HTML gère la logique de l'application, et CSS gère la base de données.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'une attaque de 'phishing' ?", "answerOptions": [ { "text": "Une tentative de se faire passer pour une entité de confiance dans une communication électronique pour voler des informations sensibles.", "isCorrect": true }, { "text": "Un logiciel qui crypte les fichiers d'un ordinateur et demande une rançon.", "isCorrect": false }, { "text": "Une attaque qui rend un service en ligne indisponible en le submergeant de requêtes.", "isCorrect": false }, { "text": "Un programme qui se propage automatiquement d'ordinateur en ordinateur.", "isCorrect": false } ] }, { "question": "Quel est le principal avantage de l'architecture 'serverless' ?", "answerOptions": [ { "text": "Les développeurs n'ont pas à se soucier de la gestion des serveurs, car le fournisseur de cloud gère automatiquement l'infrastructure.", "isCorrect": true }, { "text": "Elle permet d'exécuter des applications uniquement sur des appareils locaux, sans connexion Internet.", "isCorrect": false }, { "text": "Elle garantit une immunité totale aux cyberattaques.", "isCorrect": false }, { "text": "Elle ne nécessite pas l'utilisation d'une base de données.", "isCorrect": false } ] } ];
 
-        // Thème sombre/clair
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        });
+    quizQuestions.forEach(q => q.answerOptions = shuffleArray(q.answerOptions));
 
-        // Ajouter des icônes flottantes
-        function addFloatingIcons() {
-            const icons = ['fa-microchip', 'fa-server', 'fa-code', 'fa-database', 'fa-network-wired', 'fa-laptop-code'];
-            const container = document.querySelector('.quiz-header');
-            
-            for (let i = 0; i < 8; i++) {
-                const icon = document.createElement('i');
-                icon.className = `fas ${icons[Math.floor(Math.random() * icons.length)]} floating-icon`;
-                icon.style.left = `${Math.random() * 100}%`;
-                icon.style.top = `${Math.random() * 100}%`;
-                icon.style.animationDelay = `${Math.random() * 5}s`;
-                container.appendChild(icon);
-            }
-        }
+    const quizContentDiv = document.getElementById('quiz-content');
+    const submitButton = document.getElementById('submit-quiz');
+    const resultsDiv = document.getElementById('results');
+    const scoreDisplay = document.getElementById('score-display');
+    const resultsDetailsDiv = document.getElementById('results-details');
+    const restartButton = document.getElementById('restart-btn');
+    const participantNameInput = document.getElementById('participant-name');
+    const participantEmailInput = document.getElementById('participant-email');
+    const progressBar = document.getElementById('progress-bar');
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
 
-        // Animation de confetti
-        function createConfetti() {
-            const colors = ['#4361ee', '#3a0ca3', '#4cc9f0', '#f72585', '#7209b7'];
-            const container = document.body;
-            
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = `${Math.random() * 100}vw`;
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.width = `${Math.random() * 10 + 5}px`;
-                confetti.style.height = `${Math.random() * 10 + 5}px`;
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                
-                const animationDuration = Math.random() * 3 + 2;
-                confetti.style.animation = `confettiFall ${animationDuration}s linear forwards`;
-                
-                container.appendChild(confetti);
-                
-                // Supprimer l'élément après l'animation
-                setTimeout(() => {
-                    confetti.remove();
-                }, animationDuration * 1000);
-            }
-        }
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      themeToggle.innerHTML = body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
 
-        function buildQuiz() {
-            const output = [];
-            quizQuestions.forEach((currentQuestion, questionNumber) => {
-                const answers = [];
-                currentQuestion.answerOptions.forEach(option => {
-                    answers.push(
-                        `<div class="answer-option">
-                            <input type="radio" name="question${questionNumber}" value="${option.text}">
-                            ${option.text}
-                        </div>`
-                    );
-                });
+    function buildQuiz() {
+      const output = [];
+      quizQuestions.forEach((q, i) => {
+        const answers = q.answerOptions.map(opt => `
+          <div class="answer-option">
+            <input type="radio" name="question${i}" value="${opt.text}"> ${opt.text}
+          </div>`).join('');
+        output.push(`
+          <div class="question-box" style="animation-delay:${i * 0.1}s">
+            <div class="question-text">${i+1}. ${q.question}</div>
+            <div class="answers">${answers}</div>
+          </div>
+        `);
+      });
+      quizContentDiv.innerHTML = output.join('');
+    }
 
-                output.push(
-                    `<div class="question-box" style="animation-delay: ${questionNumber * 0.1}s">
-                        <div class="question-text">${questionNumber + 1}. ${currentQuestion.question}</div>
-                        <div class="answers">${answers.join('')}</div>
-                    </div>`
-                );
-            });
-            quizContentDiv.innerHTML = output.join('');
-            
-            // Mettre à jour la barre de progression
-            updateProgressBar();
-        }
+    function updateProgressBar() {
+      const total = quizQuestions.length;
+      const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+      progressBar.style.width = `${(answered/total)*100}%`;
+    }
 
-        function updateProgressBar() {
-            const totalQuestions = quizQuestions.length;
-            const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
-            const progress = (answeredQuestions / totalQuestions) * 100;
-            progressBar.style.width = `${progress}%`;
-        }
+    function showResults() {
+      let score = 0, resultsHTML = '';
+      const answersContainers = quizContentDiv.querySelectorAll('.answers');
 
-        function showResults() {
-            const answerContainers = quizContentDiv.querySelectorAll('.answers');
-            let score = 0;
-            let resultsDetails = '';
+      quizQuestions.forEach((q, i) => {
+        const userAnswer = answersContainers[i].querySelector(`input[name=question${i}]:checked`);
+        const userAnswerText = userAnswer ? userAnswer.value : "Aucune réponse";
+        const correctAnswer = q.answerOptions.find(a => a.isCorrect).text;
+        const isCorrect = (userAnswerText === correctAnswer);
+        if(isCorrect) score++;
 
-            // Construire l'affichage détaillé des résultats
-            let resultsHTML = '<div class="results-details">';
-            
-            quizQuestions.forEach((currentQuestion, questionNumber) => {
-                const answerContainer = answerContainers[questionNumber];
-                const selector = `input[name=question${questionNumber}]:checked`;
-                const userAnswerElement = answerContainer.querySelector(selector);
-                const userAnswerText = userAnswerElement ? userAnswerElement.value : "Aucune réponse";
-                const correctAnswerObj = currentQuestion.answerOptions.find(option => option.isCorrect);
-                const correctAnswerText = correctAnswerObj.text;
+        resultsHTML += `
+          <div class="result-item">
+            <div class="result-question">${i+1}. ${q.question}</div>
+            <div class="user-answer ${isCorrect ? 'correct' : 'incorrect'}">
+              <strong>Votre réponse:</strong> ${userAnswerText}
+            </div>
+            ${!isCorrect ? `<div class="correct-answer"><strong>Bonne réponse:</strong> ${correctAnswer}</div>` : ''}
+          </div>`;
+      });
 
-                const isCorrect = (userAnswerText === correctAnswerText);
-                if (isCorrect) {
-                    score++;
-                }
-                
-                // Ajouter aux détails pour l'email
-                resultsDetails += `Question ${questionNumber + 1}: ${isCorrect ? 'Correcte' : 'Incorrecte'}. Votre réponse: "${userAnswerText}". Bonne réponse: "${correctAnswerText}".\n`;
-                
-                // Ajouter aux détails pour l'affichage
-                resultsHTML += `
-                    <div class="result-item">
-                        <div class="result-question">${questionNumber + 1}. ${currentQuestion.question}</div>
-                        <div class="user-answer ${isCorrect ? 'correct' : 'incorrect'}">
-                            <strong>Votre réponse:</strong> ${userAnswerText}
-                            ${isCorrect ? '<span style="margin-left: 10px;"><i class="fas fa-check"></i></span>' : '<span style="margin-left: 10px;"><i class="fas fa-times"></i></span>'}
-                        </div>
-                        ${!isCorrect ? `
-                        <div class="correct-answer">
-                            <strong>Bonne réponse:</strong> ${correctAnswerText}
-                        </div>
-                        ` : ''}
-                    </div>
-                `;
-            });
-            
-            resultsHTML += '</div>';
-            resultsDetailsDiv.innerHTML = resultsHTML;
+      scoreDisplay.innerHTML = `Votre score: <span class="${score >= quizQuestions.length/2 ? 'correct':'incorrect'}">${score}</span> / ${quizQuestions.length}`;
+      resultsDetailsDiv.innerHTML = resultsHTML;
+      resultsDiv.classList.add('visible');
+      resultsDiv.scrollIntoView({behavior:'smooth'});
+    }
 
-            // Afficher le score
-            const totalQuestions = quizQuestions.length;
-            resultsDiv.classList.add('visible');
-            scoreDisplay.innerHTML = `Votre score: <span class="${score >= totalQuestions/2 ? 'correct' : 'incorrect'}">${score}</span> / ${totalQuestions}`;
-            
-            // Animation de confetti si le score est bon
-            if (score >= totalQuestions * 0.7) {
-                createConfetti();
-            }
+    function restartQuiz() {
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      participantNameInput.value = '';
+      participantEmailInput.value = '';
+      resultsDiv.classList.remove('visible');
+      updateProgressBar();
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
 
-            // Récupérer les informations du participant et envoyer l'email
-            const participantName = participantNameInput.value.trim() || 'Anonyme';
-            const participantEmail = participantEmailInput.value.trim();
-            if (participantName) {
-                // Envoi des résultats par email
-                sendResultsByEmail(participantName, participantEmail, score, totalQuestions, resultsDetails);
-            } else {
-                alert('Veuillez entrer votre nom pour soumettre les résultats.');
-            }
-            
-            // Faire défiler jusqu'aux résultats
-            resultsDiv.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function restartQuiz() {
-            // Réinitialiser le formulaire
-            document.querySelectorAll('input[type="radio"]').forEach(input => {
-                input.checked = false;
-            });
-            participantNameInput.value = '';
-            participantEmailInput.value = '';
-            
-            // Cacher les résultats
-            resultsDiv.classList.remove('visible');
-            
-            // Réinitialiser la barre de progression
-            updateProgressBar();
-            
-            // Remonter en haut de la page
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Lancer le quiz
-        buildQuiz();
-        addFloatingIcons();
-
-        // Écouter les changements de réponse pour mettre à jour la barre de progression
-        quizContentDiv.addEventListener('change', (e) => {
-            if (e.target.type === 'radio') {
-                updateProgressBar();
-            }
-        });
-
-        // Gérer la soumission du quiz
-        submitButton.addEventListener('click', showResults);
-        
-        // Gérer le redémarrage du quiz
-        restartButton.addEventListener('click', restartQuiz);
-    </script>
+    buildQuiz();
+    quizContentDiv.addEventListener('change', e => { if(e.target.type==='radio') updateProgressBar(); });
+    submitButton.addEventListener('click', showResults);
+    restartButton.addEventListener('click', restartQuiz);
+  </script>
 </body>
 </html>
