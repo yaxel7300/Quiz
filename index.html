@@ -1,468 +1,954 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Technologique Août 2025</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary: #4361ee;
-      --secondary: #3a0ca3;
-      --success: #4cc9f0;
-      --danger: #f72585;
-      --light: #f8f9fa;
-      --dark: #212529;
-      --background: #ffffff;
-      --card-bg: #ffffff;
-      --text-primary: #333333;
-      --text-secondary: #6c757d;
-      --transition: all 0.3s ease;
-      --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-      --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.15);
-      --border-radius: 16px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire des Affinités Secrètes | Pour Toi</title>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7b4397; /* Violet doux */
+            --secondary-color: #dc2430; /* Rose plus profond */
+            --accent-color: #ffafcc; /* Rose pastel */
+            --light-color: #fff9f9; /* Presque blanc, très doux */
+            --dark-color: #3f3e53; /* Gris foncé doux */
+            --success-color: #4CAF50;
+            --warning-color: #ffc107;
+            --danger-color: #f44336;
+            --shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Playfair Display', serif; /* Police élégante par défaut */
+        }
+        body {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 95vw; /* Plus large sur mobile */
+            margin: 20px auto; /* Moins de marge pour plus d'espace */
+            background: white;
+            border-radius: 25px; /* Bords plus arrondis */
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+            border: 1px solid rgba(0,0,0,0.05); /* Petite bordure discrète */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 20px; /* Plus d'espace */
+            text-align: center;
+            border-bottom: 5px solid var(--accent-color); /* Ligne d'accentuation */
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.05);
+            transform: rotate(45deg);
+            z-index: 0;
+            animation: headerWave 10s infinite linear;
+        }
+        @keyframes headerWave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 {
+            font-family: 'Dancing Script', cursive; /* Police plus artistique pour le titre */
+            font-size: 3.5rem; /* Plus grand */
+            margin-bottom: 10px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .subtitle {
+            font-size: 1.3rem; /* Plus grand */
+            opacity: 0.95;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        .quiz-container {
+            padding: 35px; /* Plus de padding */
+        }
+        .question-box {
+            background: var(--light-color);
+            border-radius: 18px; /* Plus arrondi */
+            padding: 30px; /* Plus de padding */
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            border-left: 8px solid var(--accent-color); /* Couleur d'accentuation */
+            position: relative;
+            overflow: hidden;
+        }
+        .question-box:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+        .question-box::after { /* Ajout d'un petit élément décoratif */
+            content: "✨";
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .question-text {
+            font-size: 1.5rem; /* Plus grand */
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--dark-color); /* Couleur du texte principal */
+            display: flex;
+            align-items: center;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            padding-bottom: 15px;
+        }
+        .question-text::before {
+            content: "🌸"; /* Icône plus douce */
+            margin-right: 15px;
+            font-size: 2rem;
+            animation: bounce 2s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .answers {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px; /* Plus d'espace entre les options */
+        }
+        .answer-option {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px; /* Plus de padding */
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid #e0e0e0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .answer-option:hover {
+            background: var(--accent-color); /* Change de couleur au survol */
+            color: white;
+            border-color: var(--accent-color);
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        .answer-option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.4); /* Plus grande */
+            accent-color: var(--primary-color); /* Couleur du radio button */
+        }
+        .answer-option input[type="radio"]:checked + span {
+            font-weight: 700;
+            color: var(--primary-color); /* Souligne la réponse choisie */
+        }
+        .answer-option:has(input[type="radio"]:checked) { /* Style pour l'option sélectionnée */
+            background: var(--light-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(123, 67, 151, 0.2);
+            transform: scale(1.01);
+        }
 
-    .dark-mode {
-      --background: #121212;
-      --card-bg: #1e1e1e;
-      --text-primary: #f5f5f5;
-      --text-secondary: #b0b0b0;
-      --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-      --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.4);
-    }
+        .participant-info {
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: 18px;
+            margin: 35px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 16px; /* Plus de padding */
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            background-color: white;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 5px rgba(123, 67, 151, 0.2);
+            background-color: #fcfaff;
+        }
+        button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 18px 40px; /* Plus de padding */
+            font-size: 1.3rem; /* Plus grand */
+            font-weight: 700;
+            border-radius: 50px; /* Plus arrondi pour un look "bouton" */
+            cursor: pointer;
+            display: block;
+            margin: 40px auto; /* Plus de marge */
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)); /* Inversion de gradient au survol */
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        button::before { /* Effet "clignotant" au survol */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            transition: all 0.6s ease-out;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            z-index: -1;
+        }
+        button:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      transition: var(--transition);
-    }
+        .results {
+            text-align: center;
+            padding: 40px; /* Plus de padding */
+            background: var(--light-color);
+            border-radius: 20px;
+            margin-top: 30px;
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--success-color);
+        }
+        .results.show {
+            display: block;
+        }
+        .score {
+            font-size: 2.5rem; /* Plus grand */
+            margin: 25px 0;
+            color: var(--success-color);
+            font-weight: 700;
+            font-family: 'Dancing Script', cursive;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .score i {
+            margin-right: 15px;
+            font-size: 3rem;
+            animation: tada 1.5s ease-out infinite alternate;
+        }
+        @keyframes tada {
+            0% { transform: scale(1); }
+            10%, 20% { transform: scale(0.9) rotate(-3deg); }
+            30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+            40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+        .results p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .correct, .incorrect {
+            font-weight: bold;
+            font-size: 1.3em; /* Un peu plus grand dans le texte */
+        }
+        .correct { color: var(--success-color); }
+        .incorrect { color: var(--dark-color); } /* Utilise le dark-color pour le total */
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--background);
-      color: var(--text-primary);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      background-image: radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.05) 0%, transparent 20%),
-                        radial-gradient(circle at 90% 80%, rgba(247, 37, 133, 0.05) 0%, transparent 20%);
-    }
+        /* Easter Egg Styles - PLUS MAGIQUE ET ROMANTIQUE */
+        .easter-egg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%); /* Dégradé de rose doux */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* Assure qu'il est au-dessus de tout */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            pointer-events: none;
+            backdrop-filter: blur(10px); /* Effet de flou en arrière-plan */
+        }
+        .easter-egg.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+        .hearts-container {
+            font-size: 5rem; /* Cœurs plus grands */
+            margin-bottom: 40px;
+            display: flex;
+            gap: 20px; /* Plus d'espace entre les cœurs */
+            animation: floatHearts 4s ease-in-out infinite alternate; /* Nouvelle animation */
+            position: relative;
+        }
+        @keyframes floatHearts {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            50% { transform: translateY(-30px) rotate(5deg); opacity: 1; }
+            100% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+        }
+        .heart {
+            color: #ff6b6b; /* Rouge vif pour les cœurs */
+            animation: pulseBeat 1.8s infinite cubic-bezier(0.66, 0.0, 0.0, 1); /* Animation de battement */
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .heart:nth-child(2) { animation-delay: 0.3s; }
+        .heart:nth-child(3) { animation-delay: 0.6s; }
 
-    /* Header */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      max-width: 1000px;
-      margin-bottom: 30px;
-      padding: 15px 20px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      color: white;
-    }
+        @keyframes pulseBeat {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
 
-    .header h1 {
-      font-size: 1.8rem;
-    }
+        .love-message {
+            font-family: 'Dancing Script', cursive; /* Police très romantique */
+            font-size: 3.5rem; /* Message très grand et impactant */
+            color: var(--dark-color);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            max-width: 90%;
+            line-height: 1.3;
+            animation: textPop 1.5s ease-out forwards;
+            position: relative;
+            padding: 20px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 20px;
+            border: 2px dashed #ffafcc;
+        }
+        @keyframes textPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            80% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .love-message small {
+            font-family: 'Playfair Display', serif; /* Garde une police lisible pour le petit texte */
+            font-size: 1.3rem; /* Plus grand */
+            display: block;
+            margin-top: 15px;
+            opacity: 0.8;
+            color: #6a1b9a; /* Couleur violette douce */
+        }
+        .close-btn {
+            background: white;
+            color: var(--secondary-color);
+            border: none;
+            padding: 16px 35px; /* Plus grand */
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            animation: buttonBounce 2s infinite ease-in-out;
+        }
+        @keyframes buttonBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .close-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            color: var(--primary-color);
+        }
+        /* Confettis améliorés */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #f0f;
+            animation: confetti-fall 8s linear infinite; /* Animation plus longue */
+            pointer-events: none;
+            border-radius: 50%; /* Confettis ronds */
+            transform: rotate(var(--rotation, 0deg)); /* Rotation aléatoire */
+        }
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(var(--rotation-start, 0deg)) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(var(--rotation-end, 720deg)) scale(0.5);
+                opacity: 0;
+            }
+        }
+        /* Media Queries pour le mobile */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 10px auto;
+                border-radius: 15px;
+            }
+            header {
+                padding: 30px 15px;
+            }
+            h1 {
+                font-size: 2.8rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .quiz-container {
+                padding: 20px;
+            }
+            .question-box {
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left-width: 5px;
+            }
+            .question-text {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+            .question-text::before {
+                font-size: 1.5rem;
+                margin-right: 10px;
+            }
+            .answer-option {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+            .answer-option input[type="radio"] {
+                transform: scale(1.1);
+                margin-right: 10px;
+            }
+            .participant-info {
+                padding: 20px;
+                margin: 25px 0;
+            }
+            label {
+                font-size: 1rem;
+            }
+            input[type="text"],
+            input[type="email"] {
+                padding: 12px;
+                font-size: 1rem;
+            }
+            button {
+                padding: 14px 25px;
+                font-size: 1rem;
+                margin: 25px auto;
+            }
+            .results {
+                padding: 25px;
+            }
+            .score {
+                font-size: 2rem;
+            }
+            .score i {
+                font-size: 2.5rem;
+            }
+            .results p {
+                font-size: 1rem;
+            }
 
-    .theme-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: white;
-      padding: 10px;
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .theme-toggle:hover {
-      transform: rotate(30deg);
-    }
-
-    /* Containers */
-    .quiz-container,
-    .user-info-container,
-    #results {
-      background-color: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      width: 100%;
-      max-width: 1000px;
-      margin-bottom: 25px;
-      padding: 25px;
-    }
-
-    .quiz-header {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      padding: 25px;
-      border-radius: var(--border-radius);
-      text-align: center;
-      margin-bottom: 25px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quiz-header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
-      transform: rotate(30deg);
-      animation: shine 8s infinite linear;
-    }
-
-    @keyframes shine {
-      0% { transform: translateX(-100%) rotate(30deg); }
-      100% { transform: translateX(100%) rotate(30deg); }
-    }
-
-    .quiz-header h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .progress-container {
-      width: 100%;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      margin-top: 20px;
-      overflow: hidden;
-      height: 12px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background-color: var(--success);
-      width: 0%;
-      border-radius: 10px;
-    }
-
-    /* Questions */
-    .question-box {
-      margin-bottom: 25px;
-      padding: 20px;
-      border-radius: var(--border-radius);
-      background-color: var(--card-bg);
-      box-shadow: var(--shadow);
-      transform: translateY(20px);
-      opacity: 0;
-      animation: fadeInUp 0.6s forwards;
-    }
-
-    @keyframes fadeInUp {
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .question-text {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .answers {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .answer-option {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      border-radius: 10px;
-      background-color: rgba(67, 97, 238, 0.08);
-      cursor: pointer;
-      transition: var(--transition);
-      border: 2px solid transparent;
-    }
-
-    .answer-option:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
-      border-color: var(--primary);
-      background-color: rgba(67, 97, 238, 0.15);
-    }
-
-    .answer-option input {
-      margin-right: 15px;
-      transform: scale(1.2);
-      accent-color: var(--primary);
-    }
-
-    /* Formulaire */
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 15px;
-      border: 2px solid rgba(67, 97, 238, 0.2);
-      border-radius: 10px;
-      font-size: 1rem;
-      background-color: var(--card-bg);
-      color: var(--text-primary);
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-    }
-
-    /* Boutons */
-    button {
-      display: block;
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: var(--shadow);
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    /* Résultats */
-    #results {
-      display: none;
-    }
-
-    #results.visible {
-      display: block;
-      animation: fadeIn 0.6s forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .score-display {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-align: center;
-    }
-
-    .correct { color: #2ecc71; }
-    .incorrect { color: #e74c3c; }
-
-    .result-item {
-      margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 12px;
-      background-color: rgba(67, 97, 238, 0.08);
-    }
-
-    .result-question {
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .user-answer, .correct-answer {
-      padding: 8px 12px;
-      border-radius: 6px;
-      margin: 5px 0;
-    }
-
-    .user-answer.correct {
-      background-color: rgba(46, 204, 113, 0.1);
-      border-left: 4px solid #2ecc71;
-    }
-
-    .user-answer.incorrect {
-      background-color: rgba(231, 76, 60, 0.1);
-      border-left: 4px solid #e74c3c;
-    }
-
-    .correct-answer {
-      background-color: rgba(46, 204, 113, 0.1);
-      border-left: 4px solid #2ecc71;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .quiz-header h1 { font-size: 1.6rem; }
-      .question-text { font-size: 1.1rem; }
-    }
-
-    @media (max-width: 480px) {
-      .header h1 { font-size: 1.3rem; }
-      .quiz-header h1 { font-size: 1.4rem; }
-      .question-text { font-size: 1rem; }
-      button { font-size: 1rem; padding: 14px; }
-    }
-  </style>
+            /* Easter Egg Mobile */
+            .love-message {
+                font-size: 2.2rem;
+                max-width: 95%;
+                padding: 15px;
+            }
+            .love-message small {
+                font-size: 1rem;
+            }
+            .hearts-container {
+                font-size: 3.5rem;
+                margin-bottom: 25px;
+            }
+            .close-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <h1>Quiz Technologique Août 2025</h1>
-    <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
-  </div>
-
-  <div class="quiz-container">
-    <div class="quiz-header">
-      <h1>Testez vos connaissances technologiques</h1>
-      <div class="progress-container">
-        <div class="progress-bar" id="progress-bar"></div>
-      </div>
-    </div>
-    <div class="quiz-body" id="quiz-content"></div>
-  </div>
-
-  <div class="user-info-container">
-    <div class="form-group">
-      <label for="participant-name">Nom :</label>
-      <input type="text" id="participant-name" required placeholder="Votre nom">
-    </div>
-    <div class="form-group">
-      <label for="participant-email">Email (optionnel) :</label>
-      <input type="email" id="participant-email" placeholder="Votre email">
-    </div>
-    <button id="submit-quiz">Soumettre le Quiz</button>
-  </div>
-
-  <div id="results">
-    <div class="score-display" id="score-display"></div>
-    <div class="results-details" id="results-details"></div>
-    <button id="restart-btn">Recommencer le Quiz</button>
-  </div>
-
-  <script>
-    // Mélange
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-const quizQuestions = [ { "question": "Quel est le rôle principal d'un pare-feu dans la sécurité d'un réseau ?", "answerOptions": [ { "text": "Il protège le réseau en filtrant le trafic de données pour bloquer les accès non autorisés.", "isCorrect": true }, { "text": "Il permet de stocker des données en ligne de manière sécurisée.", "isCorrect": false }, { "text": "Il sert à augmenter la vitesse de connexion Internet.", "isCorrect": false }, { "text": "Il convertit les adresses IP en noms de domaine.", "isCorrect": false } ] }, { "question": "Qu'est-ce que l'Internet des objets (IoT) ?", "answerOptions": [ { "text": "Une connexion de dispositifs physiques à Internet pour qu'ils puissent échanger des données entre eux et avec des systèmes informatiques.", "isCorrect": true }, { "text": "Un réseau social pour les développeurs d'applications.", "isCorrect": false }, { "text": "Un protocole de communication pour les satellites.", "isCorrect": false }, { "text": "Un type de base de données pour les applications mobiles.", "isCorrect": false } ] }, { "question": "Quelle est la principale caractéristique de la mémoire RAM ?", "answerOptions": [ { "text": "C'est une mémoire volatile qui stocke les données temporaires de travail d'un ordinateur.", "isCorrect": true }, { "text": "C'est une mémoire de stockage à long terme, même si l'ordinateur est éteint.", "isCorrect": false }, { "text": "Elle stocke uniquement le système d'exploitation de l'ordinateur.", "isCorrect": false }, { "text": "Elle est utilisée pour le traitement graphique intensif.", "isCorrect": false } ] }, { "question": "Qu'est-ce que la 'latence' dans les réseaux informatiques ?", "answerOptions": [ { "text": "Le délai de transmission des données entre deux points du réseau.", "isCorrect": true }, { "text": "La quantité maximale de données qui peut être transmise en un temps donné.", "isCorrect": false }, { "text": "Le nombre de connexions simultanées supportées par un serveur.", "isCorrect": false }, { "text": "Une méthode de chiffrement des données pour les sécuriser.", "isCorrect": false } ] }, { "question": "Quel est le but principal de l'intelligence artificielle (IA) ?", "answerOptions": [ { "text": "Développer des systèmes capables d'exécuter des tâches qui nécessitent habituellement l'intelligence humaine, comme la reconnaissance de formes ou la prise de décision.", "isCorrect": true }, { "text": "Créer des robots physiques pour effectuer des tâches manuelles.", "isCorrect": false }, { "text": "Améliorer les performances des jeux vidéo.", "isCorrect": false }, { "text": "Simplifier le développement d'applications mobiles.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'une 'adresse IP' ?", "answerOptions": [ { "text": "Un identifiant numérique unique attribué à chaque appareil sur un réseau informatique pour permettre sa communication.", "isCorrect": true }, { "text": "Un mot de passe pour accéder à un site web.", "isCorrect": false }, { "text": "Le nom d'un site web sur Internet.", "isCorrect": false }, { "text": "Un identifiant pour un programme d'ordinateur.", "isCorrect": false } ] }, { "question": "Quel est le principal avantage de l'architecture de microservices par rapport à une architecture monolithique ?", "answerOptions": [ { "text": "Une plus grande rapidité de développement et une meilleure évolutivité des composants individuels.", "isCorrect": true }, { "text": "Une gestion plus simple et centralisée de l'ensemble de l'application.", "isCorrect": false }, { "text": "Une meilleure performance pour les applications à faible trafic.", "isCorrect": false }, { "text": "Une réduction significative des coûts d'hébergement.", "isCorrect": false } ] }, { "question": "Dans le modèle de communication OSI, quelle couche est responsable du routage des paquets de données d'un réseau à un autre ?", "answerOptions": [ { "text": "La couche 2 (liaison de données).", "isCorrect": false }, { "text": "La couche 3 (réseau).", "isCorrect": true }, { "text": "La couche 4 (transport).", "isCorrect": false }, { "text": "La couche 7 (application).", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'un 'ransomware' ?", "answerOptions": [ { "text": "Un logiciel qui crypte les fichiers de la victime et demande une rançon pour les déchiffrer.", "isCorrect": true }, { "text": "Un programme qui supprime les virus d'un ordinateur.", "isCorrect": false }, { "text": "Un outil pour augmenter la vitesse de l'ordinateur.", "isCorrect": false }, { "text": "Un type de pare-feu pour protéger les données.", "isCorrect": false } ] }, { "question": "Quelle est la principale amélioration apportée par la technologie 5G par rapport à la 4G ?", "answerOptions": [ { "text": "Des débits de données plus élevés, une latence plus faible et une capacité accrue à gérer un grand nombre d'appareils connectés.", "isCorrect": true }, { "text": "Une plus longue durée de vie de la batterie sur les téléphones mobiles.", "isCorrect": false }, { "text": "Une meilleure compatibilité avec les anciens téléphones.", "isCorrect": false }, { "text": "Un réseau moins gourmand en énergie.", "isCorrect": false } ] }, { "question": "Quel est le rôle du CPU (Central Processing Unit) dans un ordinateur ?", "answerOptions": [ { "text": "Exécuter les instructions des programmes et effectuer les calculs nécessaires.", "isCorrect": true }, { "text": "Stocker les données de manière permanente.", "isCorrect": false }, { "text": "Afficher les images et les vidéos à l'écran.", "isCorrect": false }, { "text": "Gérer les connexions réseau.", "isCorrect": false } ] }, { "question": "Quelle est la fonction d'une base de données ?", "answerOptions": [ { "text": "Un système organisé pour le stockage, la gestion et la récupération de données numériques.", "isCorrect": true }, { "text": "Un programme pour créer des sites web.", "isCorrect": false }, { "text": "Un type de pare-feu pour la sécurité.", "isCorrect": false }, { "text": "Un outil pour écrire du code.", "isCorrect": false } ] }, { "question": "Qu'est-ce que le 'cloud computing' ?", "answerOptions": [ { "text": "La fourniture de services informatiques (serveurs, stockage, bases de données, logiciels) via Internet.", "isCorrect": true }, { "text": "L'utilisation de la mémoire RAM pour le stockage temporaire.", "isCorrect": false }, { "text": "Un type de processeur graphique.", "isCorrect": false }, { "text": "Le processus de création d'un réseau local.", "isCorrect": false } ] }, { "question": "Dans le modèle OSI, quelle est la fonction principale de la couche de transport ?", "answerOptions": [ { "text": "D'assurer la communication de bout en bout et la fiabilité de la transmission des données entre deux hôtes.", "isCorrect": true }, { "text": "De convertir des adresses IP en adresses physiques.", "isCorrect": false }, { "text": "D'afficher le contenu d'une page web.", "isCorrect": false }, { "text": "D'interconnecter des réseaux locaux.", "isCorrect": false } ] }, { "question": "Quel est le rôle principal d'une base de données relationnelle ?", "answerOptions": [ { "text": "Organiser les données en tableaux (tables) avec des relations prédéfinies entre eux.", "isCorrect": true }, { "text": "Stocker des documents non structurés comme des images ou des vidéos.", "isCorrect": false }, { "text": "Générer des graphiques et des rapports automatiquement.", "isCorrect": false }, { "text": "Permettre la communication entre différents serveurs.", "isCorrect": false } ] }, { "question": "Quelle est la principale différence entre un disque dur (HDD) et un disque SSD (Solid State Drive) ?", "answerOptions": [ { "text": "Le HDD utilise des plateaux magnétiques en rotation, tandis que le SSD utilise de la mémoire flash sans pièces mobiles.", "isCorrect": true }, { "text": "Le SSD est plus lent et consomme plus d'énergie que le HDD.", "isCorrect": false }, { "text": "Le HDD a une plus grande durabilité que le SSD.", "isCorrect": false }, { "text": "Le SSD est une mémoire volatile, contrairement au HDD.", "isCorrect": false } ] }, { "question": "Qu'est-ce que le 'Big Data' ?", "answerOptions": [ { "text": "Des ensembles de données extrêmement volumineux et complexes que les logiciels de traitement de données traditionnels ne peuvent pas gérer.", "isCorrect": true }, { "text": "Un type de base de données pour les petites entreprises.", "isCorrect": false }, { "text": "Un logiciel de sécurité pour protéger les données personnelles.", "isCorrect": false }, { "text": "Un programme pour créer des animations 3D.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'une attaque par déni de service (DDoS) ?", "answerOptions": [ { "text": "Une attaque qui rend un service en ligne indisponible en le submergeant de requêtes provenant de multiples sources.", "isCorrect": true }, { "text": "Une méthode pour voler des données personnelles en ligne.", "isCorrect": false }, { "text": "Un logiciel qui se propage d'ordinateur en ordinateur.", "isCorrect": false }, { "text": "Un moyen de chiffrer les données pour les rendre illisibles.", "isCorrect": false } ] }, { "question": "Quel est le rôle d'une 'variable' dans la programmation ?", "answerOptions": [ { "text": "Stocker une valeur qui peut être modifiée au cours de l'exécution d'un programme.", "isCorrect": true }, { "text": "Définir la structure d'un site web.", "isCorrect": false }, { "text": "Exécuter une instruction de calcul.", "isCorrect": false }, { "text": "Créer une interface utilisateur graphique.", "isCorrect": false } ] }, { "question": "Lequel des langages suivants est principalement utilisé pour la programmation de sites web côté client (frontend) ?", "answerOptions": [ { "text": "Python.", "isCorrect": false }, { "text": "Java.", "isCorrect": false }, { "text": "JavaScript.", "isCorrect": true }, { "text": "C++.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'un 'protocole' dans le contexte de la mise en réseau ?", "answerOptions": [ { "text": "Un ensemble de règles et de procédures pour la communication de données entre des appareils.", "isCorrect": true }, { "text": "Un logiciel antivirus pour le réseau.", "isCorrect": false }, { "text": "Un type de câble pour connecter des ordinateurs.", "isCorrect": false }, { "text": "Un nom de domaine pour un site web.", "isCorrect": false } ] }, { "question": "Quel est l'objectif d'un 'VPN' (Virtual Private Network) ?", "answerOptions": [ { "text": "Créer une connexion sécurisée et privée sur un réseau public, en chiffrant les données.", "isCorrect": true }, { "text": "Augmenter la vitesse d'une connexion Internet.", "isCorrect": false }, { "text": "Stocker des fichiers en ligne.", "isCorrect": false }, { "text": "Protéger l'ordinateur contre les virus.", "isCorrect": false } ] }, { "question": "Qu'est-ce que l'apprentissage automatique (Machine Learning) ?", "answerOptions": [ { "text": "Une branche de l'IA qui permet à un système d'apprendre à partir de données sans être explicitement programmé.", "isCorrect": true }, { "text": "Le processus de création d'un site web interactif.", "isCorrect": false }, { "text": "Une méthode pour optimiser le stockage des données.", "isCorrect": false }, { "text": "Un type de base de données pour les applications web.", "isCorrect": false } ] }, { "question": "Quel est le but principal d'un 'compilateur' en programmation ?", "answerOptions": [ { "text": "De convertir le code source écrit par un développeur en code machine (binaire) que le processeur peut exécuter.", "isCorrect": true }, { "text": "De détecter et de corriger les erreurs de syntaxe dans le code.", "isCorrect": false }, { "text": "De permettre la communication entre plusieurs programmes.", "isCorrect": false }, { "text": "De créer une interface utilisateur graphique pour le programme.", "isCorrect": false } ] }, { "question": "Qu'est-ce que la 'blockchain' ?", "answerOptions": [ { "text": "Une chaîne de blocs de données sécurisée et immuable, gérée par un réseau d'ordinateurs, et non par une autorité centrale.", "isCorrect": true }, { "text": "Un type de base de données centralisée utilisée par les banques.", "isCorrect": false }, { "text": "Un algorithme de compression de données pour les fichiers volumineux.", "isCorrect": false }, { "text": "Un langage de programmation pour les applications financières.", "isCorrect": false } ] }, { "question": "Qu'est-ce que le 'protocole TCP/IP' ?", "answerOptions": [ { "text": "L'ensemble de protocoles de communication de base sur lequel repose Internet.", "isCorrect": true }, { "text": "Un protocole de sécurité pour la navigation privée.", "isCorrect": false }, { "text": "Un langage pour le développement de logiciels.", "isCorrect": false }, { "text": "Un logiciel pour créer des applications mobiles.", "isCorrect": false } ] }, { "question": "Quelle est la différence entre un programme 'malware' et un virus informatique ?", "answerOptions": [ { "text": "Un virus est un type de 'malware' qui peut se répliquer en infectant d'autres fichiers sur l'ordinateur hôte.", "isCorrect": true }, { "text": "Un 'malware' ne peut pas se propager sur un réseau, contrairement à un virus.", "isCorrect": false }, { "text": "Un virus est toujours un programme bénin, alors qu'un 'malware' est malveillant.", "isCorrect": false }, { "text": "Les deux termes désignent exactement la même chose.", "isCorrect": false } ] }, { "question": "Quel est le rôle d'une 'API' (Application Programming Interface) ?", "answerOptions": [ { "text": "Un ensemble de règles et de protocoles qui permet à différentes applications logicielles de communiquer entre elles.", "isCorrect": true }, { "text": "Le code source d'un programme informatique.", "isCorrect": false }, { "text": "Un type de base de données.", "isCorrect": false }, { "text": "Une interface utilisateur graphique pour les applications.", "isCorrect": false } ] }, { "question": "Quel est le principal avantage de la fibre optique par rapport au câble Ethernet en cuivre ?", "answerOptions": [ { "text": "Des débits de données beaucoup plus élevés sur de longues distances.", "isCorrect": true }, { "text": "Une plus grande facilité d'installation et de maintenance.", "isCorrect": false }, { "text": "Une immunité totale aux logiciels malveillants.", "isCorrect": false }, { "text": "Une consommation d'énergie beaucoup plus faible.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'une 'boucle' dans la programmation ?", "answerOptions": [ { "text": "Une structure de contrôle qui répète une séquence d'instructions jusqu'à ce qu'une condition soit remplie.", "isCorrect": true }, { "text": "Une erreur de syntaxe qui empêche le programme de s'exécuter.", "isCorrect": false }, { "text": "Une variable qui stocke plusieurs valeurs.", "isCorrect": false }, { "text": "Une fonction qui exécute une tâche spécifique.", "isCorrect": false } ] }, { "question": "Quel est le but d'un 'système d'exploitation' (OS) ?", "answerOptions": [ { "text": "Gérer les ressources matérielles et logicielles d'un ordinateur et fournir une interface utilisateur.", "isCorrect": true }, { "text": "Créer des sites web et des applications.", "isCorrect": false }, { "text": "Protéger l'ordinateur contre les attaques de virus.", "isCorrect": false }, { "text": "Stocker des fichiers de manière permanente.", "isCorrect": false } ] }, { "question": "Qu'est-ce que le 'débogage' (debugging) ?", "answerOptions": [ { "text": "Le processus de détection et de correction des erreurs (bugs) dans le code source d'un programme.", "isCorrect": true }, { "text": "La création de tests pour s'assurer qu'un programme fonctionne correctement.", "isCorrect": false }, { "text": "La conversion du code source en code machine.", "isCorrect": false }, { "text": "Le processus de publication d'un programme sur le web.", "isCorrect": false } ] }, { "question": "Quelle est la différence entre 'HTML' et 'CSS' dans le développement web ?", "answerOptions": [ { "text": "HTML structure le contenu d'une page web, tandis que CSS la met en forme (couleurs, polices, mise en page).", "isCorrect": true }, { "text": "HTML gère l'interactivité d'une page web, et CSS gère la sécurité.", "isCorrect": false }, { "text": "HTML est un langage de programmation, tandis que CSS est un protocole de réseau.", "isCorrect": false }, { "text": "HTML gère la logique de l'application, et CSS gère la base de données.", "isCorrect": false } ] }, { "question": "Qu'est-ce qu'une attaque de 'phishing' ?", "answerOptions": [ { "text": "Une tentative de se faire passer pour une entité de confiance dans une communication électronique pour voler des informations sensibles.", "isCorrect": true }, { "text": "Un logiciel qui crypte les fichiers d'un ordinateur et demande une rançon.", "isCorrect": false }, { "text": "Une attaque qui rend un service en ligne indisponible en le submergeant de requêtes.", "isCorrect": false }, { "text": "Un programme qui se propage automatiquement d'ordinateur en ordinateur.", "isCorrect": false } ] }, { "question": "Quel est le principal avantage de l'architecture 'serverless' ?", "answerOptions": [ { "text": "Les développeurs n'ont pas à se soucier de la gestion des serveurs, car le fournisseur de cloud gère automatiquement l'infrastructure.", "isCorrect": true }, { "text": "Elle permet d'exécuter des applications uniquement sur des appareils locaux, sans connexion Internet.", "isCorrect": false }, { "text": "Elle garantit une immunité totale aux cyberattaques.", "isCorrect": false }, { "text": "Elle ne nécessite pas l'utilisation d'une base de données.", "isCorrect": false } ] } ];
-
-    quizQuestions.forEach(q => q.answerOptions = shuffleArray(q.answerOptions));
-
-    const quizContentDiv = document.getElementById('quiz-content');
-    const submitButton = document.getElementById('submit-quiz');
-    const resultsDiv = document.getElementById('results');
-    const scoreDisplay = document.getElementById('score-display');
-    const resultsDetailsDiv = document.getElementById('results-details');
-    const restartButton = document.getElementById('restart-btn');
-    const participantNameInput = document.getElementById('participant-name');
-    const participantEmailInput = document.getElementById('participant-email');
-    const progressBar = document.getElementById('progress-bar');
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');
-      themeToggle.innerHTML = body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    });
-
-    function buildQuiz() {
-      const output = [];
-      quizQuestions.forEach((q, i) => {
-        const answers = q.answerOptions.map(opt => `
-          <div class="answer-option">
-            <input type="radio" name="question${i}" value="${opt.text}"> ${opt.text}
-          </div>`).join('');
-        output.push(`
-          <div class="question-box" style="animation-delay:${i * 0.1}s">
-            <div class="question-text">${i+1}. ${q.question}</div>
-            <div class="answers">${answers}</div>
-          </div>
-        `);
-      });
-      quizContentDiv.innerHTML = output.join('');
-    }
-
-    function updateProgressBar() {
-      const total = quizQuestions.length;
-      const answered = document.querySelectorAll('input[type="radio"]:checked').length;
-      progressBar.style.width = `${(answered/total)*100}%`;
-    }
-
-    function showResults() {
-      let score = 0, resultsHTML = '';
-      const answersContainers = quizContentDiv.querySelectorAll('.answers');
-
-      quizQuestions.forEach((q, i) => {
-        const userAnswer = answersContainers[i].querySelector(`input[name=question${i}]:checked`);
-        const userAnswerText = userAnswer ? userAnswer.value : "Aucune réponse";
-        const correctAnswer = q.answerOptions.find(a => a.isCorrect).text;
-        const isCorrect = (userAnswerText === correctAnswer);
-        if(isCorrect) score++;
-
-        resultsHTML += `
-          <div class="result-item">
-            <div class="result-question">${i+1}. ${q.question}</div>
-            <div class="user-answer ${isCorrect ? 'correct' : 'incorrect'}">
-              <strong>Votre réponse:</strong> ${userAnswerText}
+    <div class="container">
+        <header>
+            <h1>Questionnaire des Affinités</h1>
+            <p class="subtitle">Découvrez ensemble vos passions</p>
+        </header>
+        <div class="quiz-container">
+            <div id="quiz-content"></div>
+            <div class="participant-info">
+                <div class="form-group">
+                    <label for="participant-name">Votre prénom <i class="fas fa-user-tag"></i></label>
+                    <input type="text" id="participant-name" placeholder="" required>
+                </div>
+                <div class="form-group">
+                    <label for="participant-email">Votre email <i class="fas fa-envelope-open-text"></i></label>
+                    <input type="email" id="participant-email" placeholder="Pour recevoir les résultats (optionnel)">
+                </div>
             </div>
-            ${!isCorrect ? `<div class="correct-answer"><strong>Bonne réponse:</strong> ${correctAnswer}</div>` : ''}
-          </div>`;
-      });
+            <button id="submit-quiz">
+                <i class="fas fa-magic"></i> Révéler les Affinités
+            </button>
+            <div id="results" class="results"></div>
+        </div>
+    </div>
 
-      scoreDisplay.innerHTML = `Votre score: <span class="${score >= quizQuestions.length/2 ? 'correct':'incorrect'}">${score}</span> / ${quizQuestions.length}`;
-      resultsDetailsDiv.innerHTML = resultsHTML;
-      resultsDiv.classList.add('visible');
-      resultsDiv.scrollIntoView({behavior:'smooth'});
-    }
+    <div id="easter-egg" class="easter-egg">
+        <div class="hearts-container">
+            <span class="heart">💖</span>
+            <span class="heart">💞</span>
+            <span class="heart">💕</span>
+        </div>
+        <div class="love-message">
+            💖 Emma ! 💖<br>
+            <small>Ce questionnaire est un petit clin d'œil,
+            juste pour toi. Chaque réponse est une étincelle de ton futur.
+            <br>Tu es la plus incroyable. Joyeuses Easter Egg, Chou ! 🐰</small>
+        </div>
+        <button class="close-btn" onclick="closeEasterEgg()">
+            <i class="fas fa-times-circle"></i> Retourner au monde réel... (ou presque)
+        </button>
+    </div>
 
-    function restartQuiz() {
-      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-      participantNameInput.value = '';
-      participantEmailInput.value = '';
-      resultsDiv.classList.remove('visible');
-      updateProgressBar();
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
+    <script>
+        // --- DÉBUT DE LA LOGIQUE D'ENVOI D'EMAIL ---
+        const serviceID = 'service_lgg2999';
+        const templateID = 'template_h8pp67g';
+        const publicKey = 'WwF-Q_4Exca_6s4T3';
+        emailjs.init(publicKey);
 
-    buildQuiz();
-    quizContentDiv.addEventListener('change', e => { if(e.target.type==='radio') updateProgressBar(); });
-    submitButton.addEventListener('click', showResults);
-    restartButton.addEventListener('click', restartQuiz);
-  </script>
+        function sendResultsByEmail(name, email, totalAnswered, totalQuestions, resultsDetails) {
+            const templateParams = {
+                from_name: name,
+                from_email: email || 'Non spécifié',
+                score: `${totalAnswered} / ${totalQuestions}`,
+                details: resultsDetails,
+                to_email: 'axelmoellet594@gmail.com' // REMPLACEZ PAR VOTRE VRAIE ADRESSE EMAIL
+            };
+            emailjs.send(serviceID, templateID, templateParams)
+                .then(function(response) {
+                    console.log('Email envoyé avec succès!', response.status, response.text);
+                }, function(error) {
+                    console.log('Échec de l\'envoi...', error);
+                    alert("Une erreur s'est produite lors de l'envoi. Veuillez réessayer.");
+                });
+        }
+        // --- FIN DE LA LOGIQUE D'ENVOI D'EMAIL ---
+
+        // --- DÉBUT DES DONNÉES DU QUIZ ---
+        const quizQuestions = [
+
+            // 1. Question d’accroche légère
+            {
+                question: "Si tu pouvais apprendre n'importe quelle compétence instantanément, ce serait quoi ?",
+                answerOptions: [
+                    { text: "Jouer d’un instrument", isCorrect: false },
+                    { text: "Parler une nouvelle langue", isCorrect: false },
+                    { text: "Coder comme un pro", isCorrect: false },
+                    { text: "Cuisiner comme un chef", isCorrect: false }
+                ]
+            },
+
+            // 2. Question légère sur les goûts
+            {
+                question: "Quel type de contenu consommes-tu le plus ?",
+                answerOptions: [
+                    { text: "Séries / Films", isCorrect: false },
+                    { text: "Podcasts", isCorrect: false },
+                    { text: "Livres / Mangas", isCorrect: false },
+                    { text: "Vidéos éducatives", isCorrect: false }
+                ]
+            },
+
+            // 3. Intro subtile à l’orientation
+            {
+                question: "Quel domaine t’inspire le plus ?",
+                answerOptions: [
+                    { text: "Santé et bien-être", isCorrect: false },
+                    { text: "Technologies et innovation", isCorrect: false },
+                    { text: "Art, culture et communication", isCorrect: false },
+                    { text: "Économie, droit ou politique", isCorrect: false }
+                ]
+            },
+
+            // 4. Ambition légère
+            {
+                question: "Dans un monde idéal, tu préférerais :",
+                answerOptions: [
+                    { text: "Travailler dans un bureau confortable", isCorrect: false },
+                    { text: "Être souvent en déplacement", isCorrect: false },
+                    { text: "Travailler à ton compte", isCorrect: false },
+                    { text: "Avoir un métier très social", isCorrect: false }
+                ]
+            },
+
+            // 5. Vie étudiante sans poser la question directe
+            {
+                question: "Qu’est-ce qui occupe le plus ton temps en ce moment ?",
+                answerOptions: [
+                    { text: "Les études", isCorrect: false },
+                    { text: "Le travail", isCorrect: false },
+                    { text: "Un projet perso ou associatif", isCorrect: false },
+                    { text: "Un peu de tout", isCorrect: false }
+                ]
+            },
+
+            // 6. Orientation scolaire subtile
+            {
+                question: "Quel était ta matière préférée à l’école ?",
+                answerOptions: [
+                    { text: "Biologie", isCorrect: false },
+                    { text: "Maths / Physique", isCorrect: false },
+                    { text: "Littérature / Histoire", isCorrect: false },
+                    { text: "Économie / Gestion", isCorrect: false }
+                ]
+            },
+
+            // 7. **Classe actuelle** subtile
+            {
+                question: "Dans quelle classe es-tu actuellement ?",
+                answerOptions: [
+                    { text: "Lycée (Seconde à Terminale)", isCorrect: false },
+                    { text: "Licence / Bac+1", isCorrect: false },
+                    { text: "Master / Bac+4 à Bac+5", isCorrect: false },
+                    { text: "Doctorat", isCorrect: false },
+                    { text: "Autre (formation professionnelle ou non académique)", isCorrect: false }
+                ]
+            },
+
+            // 8. **Filière actuelle** ou future
+            {
+                question: "Dans quel domaine ou filière te spécialises-tu actuellement ?",
+                answerOptions: [
+                    { text: "Médecine (générale, préventive, etc.)", isCorrect: false },
+                    { text: "Sciences (biologie, chimie, physique)", isCorrect: false },
+                    { text: "Technologies et ingénierie", isCorrect: false },
+                    { text: "Lettres et sciences humaines", isCorrect: false },
+                    { text: "Droit et économie", isCorrect: false },
+                    { text: "Autre", isCorrect: false }
+                ]
+            },
+
+            // 9. Préférences dans un domaine
+            {
+                question: "Si tu devais choisir un sujet à explorer pendant des heures, ce serait :",
+                answerOptions: [
+                    { text: "Le corps humain et la santé", isCorrect: false },
+                    { text: "Les technologies du futur", isCorrect: false },
+                    { text: "Les relations humaines", isCorrect: false },
+                    { text: "Les systèmes économiques", isCorrect: false }
+                ]
+            },
+
+            // 10. Motivation indirecte
+            {
+                question: "Qu’est-ce qui te motive le plus dans un projet ?",
+                answerOptions: [
+                    { text: "Apprendre et comprendre", isCorrect: false },
+                    { text: "Aider les autres", isCorrect: false },
+                    { text: "Créer ou innover", isCorrect: false },
+                    { text: "Être reconnu pour ce que je fais", isCorrect: false }
+                ]
+            },
+
+            // 11. Objectifs pro
+            {
+                question: "Quel type de carrière t’attire le plus ?",
+                answerOptions: [
+                    { text: "Soignant(e) / acteur de la santé", isCorrect: false },
+                    { text: "Chercheur(se) / ingénieur(e)", isCorrect: false },
+                    { text: "Manager / entrepreneur", isCorrect: false },
+                    { text: "Formateur / enseignant", isCorrect: false }
+                ]
+            },
+
+            // 12. Environnement préféré
+            {
+                question: "Dans quel environnement tu t’épanouis le mieux ?",
+                answerOptions: [
+                    { text: "Calme et structuré", isCorrect: false },
+                    { text: "Dynamique et stimulant", isCorrect: false },
+                    { text: "Flexible et libre", isCorrect: false },
+                    { text: "Entouré de gens", isCorrect: false }
+                ]
+            },
+
+            // 13. Projection pro
+            {
+                question: "Tu te vois dans 10 ans :",
+                answerOptions: [
+                    { text: "À la tête d’un projet qui me passionne", isCorrect: false },
+                    { text: "Stabilisé dans un poste que j’aime", isCorrect: false },
+                    { text: "En train de voyager ou découvrir", isCorrect: false },
+                    { text: "Toujours en train d’apprendre", isCorrect: false }
+                ]
+            },
+
+            // 14. Question sur la médecine (si pertinent)
+            {
+                question: "Si tu devais contribuer à la médecine, ce serait plutôt :",
+                answerOptions: [
+                    { text: "En tant que médecin ou soignant", isCorrect: false },
+                    { text: "En développant des technologies", isCorrect: false },
+                    { text: "En faisant de la recherche", isCorrect: false },
+                    { text: "En sensibilisant le public", isCorrect: false }
+                ]
+            },
+
+            // 15. Qualité personnelle
+            {
+                question: "Quelle qualité te définit le mieux ?",
+                answerOptions: [
+                    { text: "L’écoute", isCorrect: false },
+                    { text: "La curiosité", isCorrect: false },
+                    { text: "La créativité", isCorrect: false },
+                    { text: "La rigueur", isCorrect: false }
+                ]
+            },
+
+            // 16. Défis
+            {
+                question: "Quel défi mondial t'interpelle le plus ?",
+                answerOptions: [
+                    { text: "Les maladies rares", isCorrect: false },
+                    { text: "Le changement climatique", isCorrect: false },
+                    { text: "Les inégalités sociales", isCorrect: false },
+                    { text: "L’éducation pour tous", isCorrect: false }
+                ]
+            },
+
+            // 17. Équilibre de vie
+            {
+                question: "Comment imagines-tu ton équilibre vie pro / perso ?",
+                answerOptions: [
+                    { text: "Priorité à ma vie perso", isCorrect: false },
+                    { text: "Carrière exigeante, mais passionnante", isCorrect: false },
+                    { text: "Un bon équilibre entre les deux", isCorrect: false },
+                    { text: "Je ne sais pas encore", isCorrect: false }
+                ]
+            },
+
+            // 18. Question « fun »
+            {
+                question: "Un endroit où tu aimerais vivre ou travailler ?",
+                answerOptions: [
+                    { text: "Dans une grande ville", isCorrect: false },
+                    { text: "Au bord de la mer", isCorrect: false },
+                    { text: "À la campagne", isCorrect: false },
+                    { text: "À l’étranger", isCorrect: false }
+                ]
+            },
+
+            // 19. Source d’inspiration
+            {
+                question: "Qu’est-ce qui t’inspire le plus ?",
+                answerOptions: [
+                    { text: "Les personnes qui aident les autres", isCorrect: false },
+                    { text: "Les innovateurs et inventeurs", isCorrect: false },
+                    { text: "Les artistes ou créateurs", isCorrect: false },
+                    { text: "Les leaders engagés", isCorrect: false }
+                ]
+            },
+
+            // 20. Introspection légère
+            {
+                question: "Qu’aimerais-tu que les gens retiennent de toi ?",
+                answerOptions: [
+                    { text: "Ma gentillesse", isCorrect: false },
+                    { text: "Mes idées", isCorrect: false },
+                    { text: "Ma détermination", isCorrect: false },
+                    { text: "Mon humour", isCorrect: false }
+                ]
+            }
+
+        ];
+        // --- FIN DES DONNÉES DU QUIZ ---
+
+        // Logique du quiz
+        const quizContentDiv = document.getElementById('quiz-content');
+        const submitButton = document.getElementById('submit-quiz');
+        const resultsDiv = document.getElementById('results');
+        const participantNameInput = document.getElementById('participant-name');
+        const participantEmailInput = document.getElementById('participant-email');
+        const easterEggDiv = document.getElementById('easter-egg');
+        // const easterEggAudio = document.getElementById('easter-egg-audio'); // Pour la musique
+
+        function buildQuiz() {
+            const output = [];
+            quizQuestions.forEach((currentQuestion, questionNumber) => {
+                const answers = [];
+                currentQuestion.answerOptions.forEach((option, i) => {
+                    answers.push(
+                        `<label class="answer-option">
+                            <input type="radio" name="question${questionNumber}" value="${option.text}" id="q${questionNumber}-opt${i}">
+                            <span>${String.fromCharCode(97 + i)}. ${option.text}</span>
+                        </label>`
+                    );
+                });
+                output.push(
+                    `<div class="question-box">
+                        <div class="question-text">${currentQuestion.question}</div>
+                        <div class="answers">${answers.join('')}</div>
+                    </div>`
+                );
+            });
+            quizContentDiv.innerHTML = output.join('');
+        }
+
+        function showResults() {
+            const answerContainers = quizContentDiv.querySelectorAll('.answers');
+            let totalAnswered = 0;
+            let resultsDetails = '';
+            let allAnswered = true;
+
+            quizQuestions.forEach((currentQuestion, questionNumber) => {
+                const answerContainer = answerContainers[questionNumber];
+                const selector = `input[name=question${questionNumber}]:checked`;
+                const userAnswer = answerContainer.querySelector(selector);
+
+                if (!userAnswer) {
+                    allAnswered = false;
+                } else {
+                    totalAnswered++;
+                    resultsDetails += `Question ${questionNumber + 1}: "${userAnswer.value}"\n`;
+                }
+            });
+
+            if (!allAnswered) {
+                alert("Veuillez répondre à toutes les questions avant de soumettre.");
+                return;
+            }
+
+            const participantName = participantNameInput.value.trim();
+            const participantEmail = participantEmailInput.value.trim();
+
+            if (!participantName) {
+                alert("Veuillez entrer votre prénom.");
+                return;
+            }
+
+            // Afficher les résultats normaux
+            resultsDiv.classList.add('show');
+            resultsDiv.innerHTML = `
+                <div class="score">
+                    <i class="fas fa-check-circle"></i> Merci ${participantName} !
+                </div>
+                <p>Vos réponses à ${quizQuestions.length} questions ont été enregistrées avec succès.</p>
+                <p>Un récapitulatif a été envoyé à l'adresse e-mail fournie (si vous l'avez renseignée).</p>
+            `;
+
+            // Vérifier l'Easter Egg pour Emma
+            if (participantName.toLowerCase() === "emma") {
+                showEasterEgg();
+            }
+
+            // Envoi des résultats par email
+            sendResultsByEmail(participantName, participantEmail, totalAnswered, quizQuestions.length, resultsDetails);
+        }
+
+        function showEasterEgg() {
+            easterEggDiv.classList.add('show');
+            createConfetti();
+            // if (easterEggAudio) { easterEggAudio.play(); } // Lancer la musique
+        }
+
+        function closeEasterEgg() {
+            easterEggDiv.classList.remove('show');
+            const confettis = document.querySelectorAll('.confetti');
+            confettis.forEach(confetti => confetti.remove());
+            // if (easterEggAudio) { easterEggAudio.pause(); easterEggAudio.currentTime = 0; } // Arrêter la musique
+        }
+
+        function createConfetti() {
+            const colors = ['#ffafcc', '#a2d2ff', '#cdb4db', '#bde0fe', '#ffc8dd', '#d8e2dc', '#fae1dd'];
+            for (let i = 0; i < 150; i++) { // Plus de confettis
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 10 + 6) + 'px'; // Tailles variées
+                confetti.style.height = (Math.random() * 10 + 6) + 'px';
+                confetti.style.opacity = Math.random() * 0.7 + 0.3;
+                confetti.style.animationDuration = (Math.random() * 5 + 6) + 's'; // Durée plus longue
+                confetti.style.animationDelay = Math.random() * 3 + 's'; // Décalage pour un effet plus naturel
+                confetti.style.setProperty('--rotation-start', Math.random() * 360 + 'deg');
+                confetti.style.setProperty('--rotation-end', (Math.random() * 1000 + 720) + 'deg'); // Rotation plus forte
+                document.body.appendChild(confetti);
+                setTimeout(() => {
+                    confetti.remove();
+                }, 9000); // Retirer après la fin de l'animation
+            }
+        }
+
+        // Lancer le quiz
+        buildQuiz();
+        submitButton.addEventListener('click', showResults);
+
+        // Animation au chargement
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
 </body>
 </html>
